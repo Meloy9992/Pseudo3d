@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.UIElements.VisualElement;
 
 public class ChunkPlacer : MonoBehaviour, IDataPersist
@@ -115,7 +116,29 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-        spawnedItems.LastOrDefault().enemies = data.spawnedEnemy;
+        //spawnedItems.LastOrDefault().enemies = ;
+
+/*        List<Enemy> enemu = new List<Enemy>();
+        //data.spawnedEnemy.Count
+        for (int i = 0; i < GameObject.FindObjectsOfType<Enemy>().Length; i++)
+        {
+            //GameObject gameObject = GameObject.Find(data.spawnedEnemy[i].ToString());
+
+            Enemy enemy = GameObject.FindObjectOfType<Enemy>();
+            enemu.Add(enemy);
+            Instantiate(enemy);
+        }*/
+
+
+        for(int i = 0; i < data.spawnedEnemy.Count; i++)
+        {
+            Destroy(spawnedItems.LastOrDefault().enemies[i]); // Разрушение объекта
+            spawnedItems.LastOrDefault().enemies.RemoveAt(i); // Удаление ссылки на этот объект
+            spawnedItems.LastOrDefault().enemies.Add(data.spawnedEnemy[i]); // Добавление данных из сохранения
+            Instantiate(data.spawnedEnemy[i]); // Добавление копии объекта
+        }
+
+
     }
 
     public void SaveData(ref DataGame data)

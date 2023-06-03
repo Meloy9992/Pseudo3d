@@ -17,20 +17,20 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        this.dataPersistenceObjects = FindAllDataPersist();
-        LoadGame();
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName); // Указываем формат и название файл куда будет сохраняться/загружаться
+        this.dataPersistenceObjects = FindAllDataPersist(); // Найти все данные
+        LoadGame(); // Загрузить игру
     }
 
     private void Update()
     {
-        QuickSave();
-        QuickLoad();
+        QuickSave(); // Быстрое сохранение
+        QuickLoad(); // Быстрая загрузка
     }
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance != null) // Если instance не равен null
         {
             Debug.LogError("Найден больше чем один data Manager");
         }
@@ -39,22 +39,22 @@ public class DataManager : MonoBehaviour
 
     public void NewGame()
     {
-        this.dataGame = new DataGame();
+        this.dataGame = new DataGame(); // Создать новый объект с данным для сохранения
     }
 
     public void LoadGame()
     {
-        this.dataGame = dataHandler.Load();
+        this.dataGame = dataHandler.Load(); // Вызвать метод загрузки
 
-        if(this.dataGame == null)
+        if(this.dataGame == null) // Если данные равны null
         {
             Debug.Log("Данных не найдено. Инициализация новой игры");
-            NewGame();
+            NewGame(); // Создать новые данные
         }
 
-        foreach(IDataPersist dataPersist in dataPersistenceObjects)
+        foreach(IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
         {
-            dataPersist.LoadData(dataGame);
+            dataPersist.LoadData(dataGame); // загрузить данные в файл
         }
 
         Debug.Log("Произошла загрузка параметров:  Местоположение персонажа: " + dataGame.currentPlacePlayer + " ХП: "
@@ -64,42 +64,42 @@ public class DataManager : MonoBehaviour
 
     public void SaveGame()
     {
-        foreach(IDataPersist dataPersist in dataPersistenceObjects)
+        foreach(IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
         {
-            dataPersist.SaveData(ref dataGame);
+            dataPersist.SaveData(ref dataGame); // Сохранить данные в объект
         }
 
         Debug.Log("Произошло сохранение параметров:  Местоположение персонажа: " + dataGame.currentPlacePlayer + " ХП: "
             + dataGame.currentHpPlayer + " игрок повернут на право? " + dataGame.isFlippedRight);
 
-        dataHandler.Save(dataGame);
+        dataHandler.Save(dataGame); // Сохранить данные в файл
     }
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+        SaveGame(); // Сохранить игру при выходе
     }
 
-    public void QuickSave()
+    public void QuickSave() // Быстрое сохранение
     {
-        if(Input.GetKey(KeyCode.F5)) 
+        if(Input.GetKey(KeyCode.F5)) // Сохранить игру на нажатие f5
         {
             SaveGame();
         }
     }
 
-    public void QuickLoad()
+    public void QuickLoad() // Быстрая загрузка
     {
-        if (Input.GetKey(KeyCode.F6))
+        if (Input.GetKey(KeyCode.F6)) // Загрузить данные на нажатие f6
         {
             LoadGame();
         }
     }
 
-    private List<IDataPersist> FindAllDataPersist()
+    private List<IDataPersist> FindAllDataPersist() // Найти все доступные данные
     {
-        IEnumerable<IDataPersist> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>();
+        IEnumerable<IDataPersist> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
 
-        return new List<IDataPersist>(dataPersistenceObjects);
+        return new List<IDataPersist>(dataPersistenceObjects); // Вернуть новый список с даными
     }
 }

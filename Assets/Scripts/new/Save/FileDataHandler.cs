@@ -18,48 +18,48 @@ public class FileDataHandler
 
     public DataGame Load()
     {
-        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        string fullPath = Path.Combine(dataDirPath, dataFileName); // полный путь до json
 
-        DataGame loaded = null;
+        DataGame loaded = null; // Создаем экземпляр объекта который будем сохранять/загружать
 
-        if(File.Exists(fullPath))
+        if(File.Exists(fullPath)) // Если файл присутствует
         {
             try
             {
-                string dataToLoad = "";
-                using(FileStream stream = new FileStream(fullPath, FileMode.Open))
+                string dataToLoad = ""; // Строка для принятия json строки
+                using(FileStream stream = new FileStream(fullPath, FileMode.Open)) // Открываем новый поток для чтения файла
                 {
-                    using(StreamReader reader = new StreamReader(stream))
+                    using(StreamReader reader = new StreamReader(stream)) // Считываем в новом потоке данные из файла
                     {
-                        dataToLoad = reader.ReadToEnd();
+                        dataToLoad = reader.ReadToEnd();// Прочитать файл до конца
                     }
                 }
 
-                loaded = JsonUtility.FromJson<DataGame>(dataToLoad);
+                loaded = JsonUtility.FromJson<DataGame>(dataToLoad); // Обработать JSON с помощью утилиты json
             }
             catch(Exception e)
             {
                 Debug.LogError("Произошла ошибка при загрузке данных по пути: " + fullPath + "\n" + e);
             }
         }
-        return loaded;
+        return loaded; // Вернуть загруженное
     }
 
     public void Save(DataGame data)
     {
-        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        string fullPath = Path.Combine(dataDirPath, dataFileName); // Полный путь для сохранения файла
 
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)); // Создаем директорию
 
-            string dataToStore = JsonUtility.ToJson(data, true);
+            string dataToStore = JsonUtility.ToJson(data, true); // Записываем с помощью json утилиты данные
 
-            using(FileStream stream = new FileStream(fullPath, FileMode.Create))
+            using(FileStream stream = new FileStream(fullPath, FileMode.Create)) // Создаем поток для записи в файл
             {
-                using(StreamWriter writer = new StreamWriter(stream)) 
+                using(StreamWriter writer = new StreamWriter(stream))  // Создаем поток записи в файл
                 {
-                    writer.Write(dataToStore);
+                    writer.Write(dataToStore); // Записываем данные в файл
                 }
             }
             Debug.LogError("Путь до файла: " + fullPath);
