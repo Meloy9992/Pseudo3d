@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Chunk : MonoBehaviour
+public class Chunk : MonoBehaviour, IDataPersist
 {
     public Transform begin;
     public Transform end;
@@ -25,6 +26,7 @@ public class Chunk : MonoBehaviour
     public List<GameObject> allItems;
 
     public Enemy[,] spawnedEnemies;
+    public Enemy[,] enemiesToSafe;
 
     public Enemy[] EnemyPrefabs;
 
@@ -38,6 +40,8 @@ public class Chunk : MonoBehaviour
     public Material[] GrassMaterials;
 
     private GameObject player;
+
+    private int enemyCount;
 
     private IEnumerator Start()
     {
@@ -68,6 +72,7 @@ public class Chunk : MonoBehaviour
     {
         if (enemies.Count != 0)
         {
+            enemyCount = enemies.Count;
             for (int i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i] == null)
@@ -75,6 +80,7 @@ public class Chunk : MonoBehaviour
                     enemies.RemoveAt(i);
                 }
             }
+
         }
         else
             if (enemies.Count == 0)
@@ -110,7 +116,9 @@ public class Chunk : MonoBehaviour
 
     private void PlaceOneEnemy() // Создание сетки размещения объекта и его размещение
     {
-        HashSet<Vector2Int> vacantPlace = new HashSet<Vector2Int>(); // Список доступных мест
+        if (enemies.Count != 0)
+        {
+            HashSet<Vector2Int> vacantPlace = new HashSet<Vector2Int>(); // Список доступных мест
 
         for (int x = 0; x < spawnedEnemies.GetLength(0); x++) // Провести цикл по длине X
         {
@@ -131,14 +139,16 @@ public class Chunk : MonoBehaviour
             }
         }
 
-        Enemy newEnemy = Instantiate(EnemyPrefabs[UnityEngine.Random.Range(0, EnemyPrefabs.Length)]); // Создать противника из префаба
-        Vector2Int position = vacantPlace.ElementAt(UnityEngine.Random.Range(0, vacantPlace.Count)); // Получить случайную позицию элемента
-        int[] arr = RandomRange(position.x, position.y);
-        newEnemy.transform.position = new Vector3((arr[0] - TeleportationPlace.position.x) * UnityEngine.Random.Range(-1,1), 2, arr[1] + TeleportationPlace.position.z + 30); // Разместить противника на уровне (игровое поле x = 30, z = 20) position.y + TeleportationPlace.position.z + 30
-        Debug.Log("МЕСТОНАХОЖДЕНИЕ ПРОТИВНИКА" + newEnemy.transform.position);
-        Debug.Log("ТЕЛЕПОРТАТИОН ПЛЕЙС " + TeleportationPlace.position.x + " " + TeleportationPlace.position.z);
-        spawnedEnemies[position.x, position.y] = newEnemy; // Разместить противника в матрице
-        Debug.Log("МЕСТОНАХОЖДЕНИЕ ПРОТИВНИКА В МАТРИЦЕ " + position.x + " " + position.y);
+            Enemy newEnemy = Instantiate(EnemyPrefabs[UnityEngine.Random.Range(0, EnemyPrefabs.Length)]); // Создать противника из префаба
+            Vector2Int position = vacantPlace.ElementAt(UnityEngine.Random.Range(0, vacantPlace.Count)); // Получить случайную позицию элемента
+            int[] arr = RandomRange(position.x, position.y);
+            newEnemy.transform.position = new Vector3((arr[0] - TeleportationPlace.position.x) * UnityEngine.Random.Range(-1, 1), 2, arr[1] + TeleportationPlace.position.z + 30); // Разместить противника на уровне (игровое поле x = 30, z = 20) position.y + TeleportationPlace.position.z + 30
+            Debug.Log("МЕСТОНАХОЖДЕНИЕ ПРОТИВНИКА" + newEnemy.transform.position);
+            Debug.Log("ТЕЛЕПОРТАТИОН ПЛЕЙС " + TeleportationPlace.position.x + " " + TeleportationPlace.position.z);
+            spawnedEnemies[position.x, position.y] = newEnemy; // Разместить противника в матрице
+            Debug.Log("МЕСТОНАХОЖДЕНИЕ ПРОТИВНИКА В МАТРИЦЕ " + position.x + " " + position.y);
+            enemiesToSafe = spawnedEnemies;
+        }
     } 
 
 
@@ -171,13 +181,23 @@ public class Chunk : MonoBehaviour
 
         if (x > -14 && x < 14 && z > -9 && z < 9)
         {
-            Debug.LogError("X = " + x);
-            Debug.LogError("Z = " + z);
+            Debug.Log("X = " + x);
+            Debug.Log("Z = " + z);
             return arr;
         }
         System.Random rnd = new System.Random();
         x -= rnd.Next(-10, 10); 
         z -= rnd.Next(-10, 10);
         return RandomRange(x, z);
-    } 
+    }
+
+    public void LoadData(DataGame data)
+    {
+        
+    }
+
+    public void SaveData(ref DataGame data)
+    {
+        
+    }
 }

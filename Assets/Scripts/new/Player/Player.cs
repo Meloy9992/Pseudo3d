@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Player : Character
+public class Player : Character , IDataPersist
 {
 
     public bool flipRight = true; // повернут на право?
     private Vector3 vector; // направление
+    private Vector3 vectorToSafe;
     public Rigidbody RigidBody; // ригид боди
 
     public Text healthDisplay; // отображение здоровья на экране
@@ -25,6 +27,8 @@ public class Player : Character
 
     public Animator animator; // аниматор
 
+    private int idScene;
+
     [SerializeField] private PlayerSettings playerSettings; // Настройки персонажа (На данный момент только скорость)
 
     private IPlayerInput playerInput;  // Интерфейс направления
@@ -36,6 +40,7 @@ public class Player : Character
         RigidBody = GetComponent<Rigidbody>(); // получение rigid body
         RigidBody.AddForce(0, 0, 2.0f, ForceMode.Impulse); // добавление движения
         gravity = GetComponent<Gravity>();
+        vectorToSafe = this.transform.position;
         //GameObject.DontDestroyOnLoad(this.gameObject);
     }
 
@@ -52,6 +57,8 @@ public class Player : Character
     {
         displayHealth(); // отображение здоровья на экране
         Move(); // Движение
+        vectorToSafe = this.transform.position;
+        idScene = SceneManager.GetActiveScene().buildIndex;
         gravity.Gravitation(); //Гравитация
 
         if (Input.GetKeyDown(KeyCode.Q)) // если нажата q то вменить оружие
@@ -193,6 +200,27 @@ public class Player : Character
                 ribovTimer = item;
             }
         }
+    }
+
+    public void LoadData(DataGame data)
+    {
+        //data.currentHpPlayer
+        //data.currentPlacePlayer
+        //data.isFlippedRighth
+
+        this.health = data.currentHpPlayer;
+        this.flipRight = data.isFlippedRight;
+        vectorToSafe = data.currentPlacePlayer;
+        idScene = data.SceneNumber;
+    }
+
+    public void SaveData(ref DataGame data)
+    {
+        data.currentHpPlayer = (int) this.health;
+        data.isFlippedRight = flipRight;
+        data.currentPlacePlayer = vectorToSafe;
+        data.SceneNumber = SceneManager.GetActiveScene().buildIndex;
+
     }
 }
 

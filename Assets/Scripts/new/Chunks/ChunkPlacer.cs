@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.UIElements.VisualElement;
 
-public class ChunkPlacer : MonoBehaviour
+public class ChunkPlacer : MonoBehaviour, IDataPersist
 {
     public GameObject player;
     //public Teleport teleport;
@@ -48,8 +49,8 @@ public class ChunkPlacer : MonoBehaviour
 
         if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
         {
-            Debug.LogError("Z OS PLAYER " + player.transform.position.z);
-            Debug.LogError("Z OS TELEPORT " + spawnedItems[spawnedItems.Count - 1].teleportEnds.position.z);
+            Debug.Log("Z OS PLAYER " + player.transform.position.z);
+            Debug.Log("Z OS TELEPORT " + spawnedItems[spawnedItems.Count - 1].teleportEnds.position.z);
             SpawnChunk();
 
 
@@ -81,8 +82,6 @@ public class ChunkPlacer : MonoBehaviour
             LoadNewLevel();
 
         }
-        
-
     }
 
     private void AddChunk()
@@ -110,8 +109,20 @@ public class ChunkPlacer : MonoBehaviour
 
             SceneManager.MoveGameObjectToScene(player.gameObject, sceneToLoad); // Переместить персонажа на след сцену
 
-            
         }
 
+    }
+
+    public void LoadData(DataGame data)
+    {
+        spawnedItems.LastOrDefault().enemiesToSafe = data.spawnedEnemy;
+    }
+
+    public void SaveData(ref DataGame data)
+    {
+        Debug.LogError("Название чанка" + name);
+        data.spawnedEnemy = spawnedItems.LastOrDefault().enemiesToSafe;
+        data.chunks = spawnedItems;
+        Debug.LogError("Противники в сохр - " + data.spawnedEnemy);
     }
 }
