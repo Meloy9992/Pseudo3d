@@ -115,14 +115,12 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-        spawnedItems.LastOrDefault().enemiesToSafe = data.spawnedEnemy;
+        spawnedItems.LastOrDefault().enemies = data.spawnedEnemy;
     }
 
     public void SaveData(ref DataGame data)
     {
-        Debug.LogError("Название чанка" + name);
-        data.spawnedEnemy = spawnedItems.LastOrDefault().enemiesToSafe;
-        data.chunks = spawnedItems;
-        Debug.LogError("Противники в сохр - " + data.spawnedEnemy);
+       
+        data.spawnedEnemy = this.spawnedItems.LastOrDefault().enemies;
     }
 }

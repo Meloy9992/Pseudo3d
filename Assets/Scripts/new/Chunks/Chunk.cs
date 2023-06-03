@@ -26,7 +26,6 @@ public class Chunk : MonoBehaviour, IDataPersist
     public List<GameObject> allItems;
 
     public Enemy[,] spawnedEnemies;
-    public Enemy[,] enemiesToSafe;
 
     public Enemy[] EnemyPrefabs;
 
@@ -40,8 +39,6 @@ public class Chunk : MonoBehaviour, IDataPersist
     public Material[] GrassMaterials;
 
     private GameObject player;
-
-    private int enemyCount;
 
     private IEnumerator Start()
     {
@@ -72,7 +69,6 @@ public class Chunk : MonoBehaviour, IDataPersist
     {
         if (enemies.Count != 0)
         {
-            enemyCount = enemies.Count;
             for (int i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i] == null)
@@ -147,7 +143,6 @@ public class Chunk : MonoBehaviour, IDataPersist
             Debug.Log("ÒÅËÅÏÎÐÒÀÒÈÎÍ ÏËÅÉÑ " + TeleportationPlace.position.x + " " + TeleportationPlace.position.z);
             spawnedEnemies[position.x, position.y] = newEnemy; // Ðàçìåñòèòü ïðîòèâíèêà â ìàòðèöå
             Debug.Log("ÌÅÑÒÎÍÀÕÎÆÄÅÍÈÅ ÏÐÎÒÈÂÍÈÊÀ Â ÌÀÒÐÈÖÅ " + position.x + " " + position.y);
-            enemiesToSafe = spawnedEnemies;
         }
     } 
 
@@ -193,11 +188,11 @@ public class Chunk : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-        
+
     }
 
     public void SaveData(ref DataGame data)
     {
-        
+
     }
 }

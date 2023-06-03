@@ -204,10 +204,6 @@ public class Player : Character , IDataPersist
 
     public void LoadData(DataGame data)
     {
-        //data.currentHpPlayer
-        //data.currentPlacePlayer
-        //data.isFlippedRighth
-
         this.health = data.currentHpPlayer;
         this.flipRight = data.isFlippedRight;
         vectorToSafe = data.currentPlacePlayer;

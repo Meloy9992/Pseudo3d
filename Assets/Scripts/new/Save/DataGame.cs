@@ -8,14 +8,14 @@ using UnityEngine.SceneManagement;
 [Serializable]
 public class DataGame
 {
-    public Vector3 currentPlacePlayer;
-    public int currentHpPlayer;
-    public bool isFlippedRight;
-    public int SceneNumber;
-    public int countChunks;
-    public List<Chunk> chunks;
-    public int enemyCount;
-    public Enemy[,] spawnedEnemy;
+    public Vector3 currentPlacePlayer; // Текущее местоположение персонажа
+    public int currentHpPlayer; // Текущее hp персонажа
+    public bool isFlippedRight; // Положение повернут ли игрок в правую сторону
+    public int SceneNumber; // Номер сцены/уровня
+    public int countChunks; // Количество чанков
+    public List<Chunk> chunks; // Список чанков
+    public int enemyCount; // Количество противников на чанке
+    public List<Enemy> spawnedEnemy; // Заспавненые враги
 
     public DataGame()
     {
@@ -24,8 +24,9 @@ public class DataGame
         this.SceneNumber = 0;
         this.countChunks = 1;
         this.chunks = new List<Chunk>();
-        this.spawnedEnemy = chunks.LastOrDefault().spawnedEnemies;
-        this.enemyCount = chunks.LastOrDefault().enemies.Count;
+        this.spawnedEnemy = new List<Enemy>();
+/*        this.spawnedEnemy = chunks.LastOrDefault().spawnedEnemies;
+        this.enemyCount = chunks.LastOrDefault().enemies.Count;*/
         
     }
 }
