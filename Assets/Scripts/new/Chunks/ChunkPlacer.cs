@@ -31,6 +31,8 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
+
+        
         int idNextScene = SceneManager.GetActiveScene().buildIndex + 1;
 
         try
@@ -118,32 +120,78 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
     {
         //spawnedItems.LastOrDefault().enemies = ;
 
-/*        List<Enemy> enemu = new List<Enemy>();
-        //data.spawnedEnemy.Count
-        for (int i = 0; i < GameObject.FindObjectsOfType<Enemy>().Length; i++)
-        {
-            //GameObject gameObject = GameObject.Find(data.spawnedEnemy[i].ToString());
 
-            Enemy enemy = GameObject.FindObjectOfType<Enemy>();
-            enemu.Add(enemy);
-            Instantiate(enemy);
-        }*/
+        /*        for(int i = 0; i < data.spawnedEnemy.Count; i++)
+                {
+                    Debug.Log("Начало удаления по индексу " + i);
+                    Destroy(spawnedItems.LastOrDefault().enemies[i]); // Разрушить объект
+                    Debug.Log("Объект разрушен по индексу " + i);
+                    spawnedItems.LastOrDefault().enemies.RemoveAt(i); // Удалить ссылки на этот объект
+                    Debug.Log("Ссылка удалена по индексу " + i);
 
+                    spawnedItems.LastOrDefault().enemies.Add(data.spawnedEnemy[i]); // Добавление данных из сохранения
+                    GameObject enemy = GameObject.Find(data.spawnedEnemy[i].ToString());
+                    Instantiate(enemy); // Добавление копии объекта
+                }
+                spawnedItems.LastOrDefault().spawnedEnemies = null;*/
 
-        for(int i = 0; i < data.spawnedEnemy.Count; i++)
-        {
-            Destroy(spawnedItems.LastOrDefault().enemies[i]); // Разрушение объекта
-            spawnedItems.LastOrDefault().enemies.RemoveAt(i); // Удаление ссылки на этот объект
-            spawnedItems.LastOrDefault().enemies.Add(data.spawnedEnemy[i]); // Добавление данных из сохранения
-            Instantiate(data.spawnedEnemy[i]); // Добавление копии объекта
-        }
-
-
+        //this.spawnedItems = data.chunks;
+        // GameObject.Find(data.chunks[0].ToString()).transform.position = whatever;
+       // updatePlayerVector(new Vector3(4.69f, 1.02f, -43.68f));
+        Debug.LogError(data);
+        Debug.LogError(data);
+        //spawnedItems = getObjectById();
+        Vector3 vector = new Vector3(data.currentPlacePlayer.x, data.currentPlacePlayer.y, data.currentPlacePlayer.z);
+        
     }
 
     public void SaveData(ref DataGame data)
     {
-       
-        data.spawnedEnemy = this.spawnedItems.LastOrDefault().enemies;
+
+        /*        data.spawnedEnemy = this.spawnedItems.LastOrDefault().enemies;
+
+                data.HpEnemy = spawnedItems.LastOrDefault().enemies.LastOrDefault().health;
+                data.damageEnemy = spawnedItems.LastOrDefault().enemies.LastOrDefault().damage;
+                data.currentPlaceEnemy = spawnedItems.LastOrDefault().enemies.LastOrDefault().transform.position;
+                data.speedEnemy = spawnedItems.LastOrDefault().enemies.LastOrDefault().normalSpeed;*/
+
+
+
+        data.chunks = spawnedItems; //TODO - Здесь глюк.
+        Debug.Log("ЧАНКИИИ" + data.chunks);
+
+        // data.chunks = JsonHelper.ToJson()
+    }
+
+    public static GameObject getObjectById(int id)
+    {
+        Dictionary<int, GameObject> m_instanceMap = new Dictionary<int, GameObject>();
+        //record instance map
+
+        m_instanceMap.Clear();
+        List<GameObject> gos = new List<GameObject>();
+        foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)))
+        {
+            if (gos.Contains(go))
+            {
+                continue;
+            }
+            gos.Add(go);
+            m_instanceMap[go.GetInstanceID()] = go;
+        }
+
+        if (m_instanceMap.ContainsKey(id))
+        {
+            return m_instanceMap[id];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private void updatePlayerVector(Vector3 vector)
+    {
+        player.transform.position = vector;
     }
 }

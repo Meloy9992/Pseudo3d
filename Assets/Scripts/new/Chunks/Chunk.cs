@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-
+[Serializable]
 public class Chunk : MonoBehaviour, IDataPersist
 {
     public Transform begin;
@@ -188,11 +188,12 @@ public class Chunk : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-
+        this.spawnedEnemies = data.generateEnemy;
+        
     }
 
     public void SaveData(ref DataGame data)
     {
-
+        data.generateEnemy = this.spawnedEnemies;
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDataPersist
 {
 
     public int health;
@@ -28,9 +28,11 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     private Vector3 vector;
     private Rigidbody rb;
+    private Enemy enem;
 
     private void Start()
     {
+        enem = this;
         anim = GetComponent<Animator>(); // Получение аниматора
         player = FindObjectOfType<Player>(); //Найти объект игрок по классу Player_move
         normalSpeed = speed;
@@ -146,5 +148,36 @@ public class Enemy : MonoBehaviour
                 rb.AddForce(0, 0, -fleeDirection.magnitude * speed * Time.deltaTime, ForceMode.Impulse); // Двигаем противника в сторону убегания
             }
         }
+    }
+
+    public void LoadData(DataGame data)
+    {
+/*        this.health = data.randomEnemy.health;
+        this.damage = data.randomEnemy.damage;
+        this.vector = data.randomEnemy.vector;
+        this.speed = data.randomEnemy.speed;
+        this.rb = data.randomEnemy.rb;*/
+
+
+/*        this.health = data.HpEnemy;
+        this.damage = data.damageEnemy;
+        this.vector = data.currentPlaceEnemy;
+        this.speed = data.speedEnemy;*/
+
+    }
+
+    public void SaveData(ref DataGame data)
+    {
+        
+/*        enem.health = this.health;
+        enem.vector = this.vector;
+        enem.rb = this.rb;
+        enem.damage = this.damage;
+        enem.speed = this.speed;
+        enem.transform.position = this.transform.position;
+        data.randomEnemy = enem;*/
+
+
+
     }
 }

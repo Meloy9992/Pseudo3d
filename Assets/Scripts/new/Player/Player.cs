@@ -204,18 +204,20 @@ public class Player : Character , IDataPersist
 
     public void LoadData(DataGame data)
     {
-        this.health = data.currentHpPlayer;
-        this.flipRight = data.isFlippedRight;
-        vectorToSafe = data.currentPlacePlayer;
-        idScene = data.SceneNumber;
+        this.health = data.currentHpPlayer; // Загрзить здоровье из сохранения
+        this.flipRight = data.isFlippedRight; // Загрузить поворт из сохранения
+        this.vectorToSafe = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
+        this.vector = data.currentPlacePlayer;
+        transform.position = data.currentPlacePlayer;
+        idScene = data.SceneNumber; // Загрузить id уровня из сохранения
     }
 
     public void SaveData(ref DataGame data)
     {
-        data.currentHpPlayer = (int) this.health;
-        data.isFlippedRight = flipRight;
-        data.currentPlacePlayer = vectorToSafe;
-        data.SceneNumber = SceneManager.GetActiveScene().buildIndex;
+        data.currentHpPlayer = (int) this.health; // Сохранить здоровье
+        data.isFlippedRight = flipRight; // Сохранить поворт
+        data.currentPlacePlayer = vectorToSafe; // Сохранить текущие координаты
+        data.SceneNumber = SceneManager.GetActiveScene().buildIndex; // Сохранить индекс текщей сцены
 
     }
 }
