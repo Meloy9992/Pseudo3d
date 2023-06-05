@@ -107,7 +107,6 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
             Scene sceneToLoad = SceneManager.GetSceneByBuildIndex(idNextScene); //Получить след сцену
 
-
             SceneManager.MoveGameObjectToScene(player.gameObject, sceneToLoad); // Переместить персонажа на след сцену
 
         }
@@ -135,12 +134,13 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                 {
 /*                    Chunk chunk = new Chunk();*/
                     Debug.Log(data.chunksName[i]);
-                    this.name = data.chunksName[i];
-                    this.transform.position = data.chunksPlace[i];
+                    Debug.LogError(data.chunks[i].name);
+/*                    this.name = data.chunksName[i];
+                    this.transform.position = data.chunksPlace[i];*/
 
-                    Instantiate(this.transform,
+/*                    Instantiate(this.transform,
                                 transform.position,
-                                transform.rotation);
+                                transform.rotation);*/
 
                 }
                 Debug.LogError("Обновленные чанки " + spawnedItems);
@@ -192,7 +192,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         // Собрать обхекты в список
         // Заменить список новым списком
 
-        
+
 
         List<string> nameChunks = new List<string>();
         List<Vector3> vector3s = new List<Vector3>();
@@ -201,8 +201,6 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         {
             nameChunks.Add(spawnedItems[i].name);
             vector3s.Add(spawnedItems[i].transform.position);
-/*            data.chunksName.Add(spawnedItems[i].name);
-            data.chunksPlace.Add(spawnedItems[i].transform.position);*/
         }
 
         data.chunksName = nameChunks;
