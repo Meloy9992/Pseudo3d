@@ -25,6 +25,14 @@ public static class JsonHelper
         return JsonUtility.ToJson(wrapper, prettyPrint);
     }
 
+    public static string ToJson<T>(List<T> lists)
+    {
+        Wrapper<T> wrapper = new Wrapper<T>();
+        List<T> wrapperList = new List<T>();
+        wrapperList = lists;
+        return JsonUtility.ToJson(wrapperList);
+    }
+
     [Serializable]
     private class Wrapper<T>
     {

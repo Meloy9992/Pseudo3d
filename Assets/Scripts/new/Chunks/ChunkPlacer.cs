@@ -117,23 +117,40 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
     public void LoadData(DataGame data)
     {
         //spawnedItems.LastOrDefault().enemies = ;
-        if (data.chunks != null )
+        if(data.chunks != null)
         {
-            Debug.LogError("Текущие чанки " + spawnedItems);
-            spawnedItems = data.chunks;
-
-            foreach(Chunk chunk in spawnedItems)
+            if (data.chunks.Count != 0)
             {
-                Instantiate(chunk.transform,
-                        transform.position,
-                        transform.rotation);
+                Debug.LogError("Текущие чанки " + spawnedItems);
+                spawnedItems = data.chunks; // Получение чанков из сохранения
+
+/*                foreach (Chunk chunk in spawnedItems)
+                {
+                    Instantiate(chunk.transform,
+                            transform.position,
+                            transform.rotation);
+                }*/
+
+                for(int i = 0; i < spawnedItems.Count; i++)
+                {
+/*                    Chunk chunk = new Chunk();*/
+                    Debug.Log(data.chunksName[i]);
+                    this.name = data.chunksName[i];
+                    this.transform.position = data.chunksPlace[i];
+
+                    Instantiate(this.transform,
+                                transform.position,
+                                transform.rotation);
+
+                }
+                Debug.LogError("Обновленные чанки " + spawnedItems);
             }
-            Debug.LogError("Обновленные чанки " + spawnedItems);
+            else
+            {
+                Debug.LogError("Данные сохранения равны нулю");
+            }
         }
-        else
-        {
-            Debug.LogError("Данные сохранения равны нулю");
-        }
+
         /*        for (int i = 0; i < data.spawnedEnemy.Count; i++)
                 {
                     Debug.Log("Начало удаления по индексу " + i);
@@ -172,17 +189,38 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         data.chunks = spawnedItems;
 
+        // Собрать обхекты в список
+        // Заменить список новым списком
+
+        
+
+        List<string> nameChunks = new List<string>();
+        List<Vector3> vector3s = new List<Vector3>();
+
         for (int i = 0; i < spawnedItems.Count; i++)
         {
-            data.chunks[i].begin = spawnedItems[i].begin;
-            data.chunks[i].end = spawnedItems[i].end;
-            data.chunks[i].teleportEnds = spawnedItems[i].teleportEnds;
-            data.chunks[i].playersDot = spawnedItems[i].playersDot;
-            data.chunks[i].TeleportationPlace = spawnedItems[i].TeleportationPlace;
-            data.chunks[i].teleport = spawnedItems[i].teleport;
-            data.chunks[i].DoorUp = spawnedItems[i].DoorUp;
-            data.chunks[i].spawnedEnemies = spawnedItems[i].spawnedEnemies;
+            nameChunks.Add(spawnedItems[i].name);
+            vector3s.Add(spawnedItems[i].transform.position);
+/*            data.chunksName.Add(spawnedItems[i].name);
+            data.chunksPlace.Add(spawnedItems[i].transform.position);*/
         }
+
+        data.chunksName = nameChunks;
+        data.chunksPlace = vector3s;
+
+
+        /*        for (int i = 0; i < spawnedItems.Count; i++)
+                {
+                    data.chunks[i].begin = spawnedItems[i].begin;
+                    data.chunks[i].end = spawnedItems[i].end;
+                    data.chunks[i].teleportEnds = spawnedItems[i].teleportEnds;
+                    data.chunks[i].playersDot = spawnedItems[i].playersDot;
+                    data.chunks[i].TeleportationPlace = spawnedItems[i].TeleportationPlace;
+                    data.chunks[i].teleport = spawnedItems[i].teleport;
+                    data.chunks[i].DoorUp = spawnedItems[i].DoorUp;
+                    data.chunks[i].spawnedEnemies = spawnedItems[i].spawnedEnemies;
+
+                }*/
 
         // data.chunks = JsonHelper.ToJson()
     }

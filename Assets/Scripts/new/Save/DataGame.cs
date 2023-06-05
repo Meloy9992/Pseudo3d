@@ -15,10 +15,11 @@ public class DataGame
     public int SceneNumber; // Номер сцены/уровня
     public int countChunks; // Количество чанков
     public List<Chunk> chunks; // Список чанков
-    public Player player;
     public int enemyCount; // Количество противников на чанке
     public List<Enemy> spawnedEnemy; // Заспавненые враги
     public Enemy[,] generateEnemy; // Сетка со случайными врагами
+    public List<string> chunksName;
+    public List<Vector3> chunksPlace;
     /*    public Enemy[,] generateEnemy; // Сетка со случайными врагами 
         public int HpEnemy;
         public int damageEnemy;
@@ -32,8 +33,12 @@ public class DataGame
         this.isFlippedRight = false;
         this.SceneNumber = 0;
         this.countChunks = 1;
-/*        this.chunks = new List<Chunk>();
-        this.spawnedEnemy = new List<Enemy>();*/
+        this.chunks = new List<Chunk>();
+        this.spawnedEnemy = new List<Enemy>();
+        this.chunksName = new List<string>();
+        this.chunksPlace = new List<Vector3>();
+        /*        this.chunks = new List<Chunk>();
+                this.spawnedEnemy = new List<Enemy>();*/
         // this.enemyCount = chunks.LastOrDefault().enemies.Count;
 
     }
