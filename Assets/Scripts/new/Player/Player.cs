@@ -164,8 +164,8 @@ public class Player : Character , IDataPersist
 
     public void potion(Collider other)
     {
-        ChangeHealth(5);
-        Destroy(other.gameObject);
+        ChangeHealth(5); // Добавить 5 ХП
+        Destroy(other.gameObject); // Разрушить объект
     }
 
     public void animaion()
@@ -192,12 +192,12 @@ public class Player : Character , IDataPersist
 
     public void FoundPowerUpTimer()
     {
-        FishBooster[] obj = Resources.FindObjectsOfTypeAll<FishBooster>();
+        FishBooster[] obj = Resources.FindObjectsOfTypeAll<FishBooster>(); // Найти в ресурсах объекты с типом FishBooster
         foreach (var item in obj)
         {
-            if (item.name == "Power Up Timer")
+            if (item.name == "Power Up Timer") // Если у объекта название совпало
             {
-                ribovTimer = item;
+                ribovTimer = item; // Присвоить таймеру элемент
             }
         }
     }
@@ -206,9 +206,9 @@ public class Player : Character , IDataPersist
     {
         this.health = data.currentHpPlayer; // Загрзить здоровье из сохранения
         this.flipRight = data.isFlippedRight; // Загрузить поворт из сохранения
-        this.vectorToSafe = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
-        this.vector = data.currentPlacePlayer;
-        transform.position = data.currentPlacePlayer;
+/*        this.vectorToSafe = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
+        this.vector = data.currentPlacePlayer;*/
+        transform.position = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
         idScene = data.SceneNumber; // Загрузить id уровня из сохранения
     }
 

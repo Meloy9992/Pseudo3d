@@ -5,14 +5,14 @@ using UnityEngine;
 [Serializable]
 public class SerializeChunk : MonoBehaviour
 {
-     public Transform begin;
+    [SerializeField] public Transform begin;
     [SerializeField] public Transform end;
     [SerializeField] public Transform teleportEnds;
     [SerializeField] public Transform playersDot;
     [SerializeField] public Transform TeleportationPlace;
     [SerializeField] public GameObject teleport;
 
-     public GameObject DoorUp;
+    [SerializeField] public GameObject DoorUp;
     [SerializeField] public GameObject DoorDown;
     [SerializeField] public GameObject DoorRight;
     [SerializeField] public GameObject DoorLeft;

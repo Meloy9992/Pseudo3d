@@ -12,6 +12,8 @@ TagManager:
   - Power Up Timer
   - Weapon Image
   - Grass
+  - Button Load
+  - Button New Game
   layers:
   - Default
   - TransparentFX

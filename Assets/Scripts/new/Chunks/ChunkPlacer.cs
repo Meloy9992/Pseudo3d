@@ -31,8 +31,6 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-
-        
         int idNextScene = SceneManager.GetActiveScene().buildIndex + 1;
 
         try
@@ -119,9 +117,24 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
     public void LoadData(DataGame data)
     {
         //spawnedItems.LastOrDefault().enemies = ;
+        if (data.chunks != null )
+        {
+            Debug.LogError("Текущие чанки " + spawnedItems);
+            spawnedItems = data.chunks;
 
-
-        /*        for(int i = 0; i < data.spawnedEnemy.Count; i++)
+            foreach(Chunk chunk in spawnedItems)
+            {
+                Instantiate(chunk.transform,
+                        transform.position,
+                        transform.rotation);
+            }
+            Debug.LogError("Обновленные чанки " + spawnedItems);
+        }
+        else
+        {
+            Debug.LogError("Данные сохранения равны нулю");
+        }
+        /*        for (int i = 0; i < data.spawnedEnemy.Count; i++)
                 {
                     Debug.Log("Начало удаления по индексу " + i);
                     Destroy(spawnedItems.LastOrDefault().enemies[i]); // Разрушить объект
@@ -133,16 +146,16 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                     GameObject enemy = GameObject.Find(data.spawnedEnemy[i].ToString());
                     Instantiate(enemy); // Добавление копии объекта
                 }
-                spawnedItems.LastOrDefault().spawnedEnemies = null;*/
+                spawnedItems.LastOrDefault().spawnedEnemies = null;
 
-        //this.spawnedItems = data.chunks;
-        // GameObject.Find(data.chunks[0].ToString()).transform.position = whatever;
-       // updatePlayerVector(new Vector3(4.69f, 1.02f, -43.68f));
-        Debug.LogError(data);
-        Debug.LogError(data);
-        //spawnedItems = getObjectById();
-        Vector3 vector = new Vector3(data.currentPlacePlayer.x, data.currentPlacePlayer.y, data.currentPlacePlayer.z);
-        
+                //this.spawnedItems = data.chunks;
+                // GameObject.Find(data.chunks[0].ToString()).transform.position = whatever;
+                // updatePlayerVector(new Vector3(4.69f, 1.02f, -43.68f));
+                Debug.LogError(data);
+                Debug.LogError(data);
+                //spawnedItems = getObjectById();
+                Vector3 vector = new Vector3(data.currentPlacePlayer.x, data.currentPlacePlayer.y, data.currentPlacePlayer.z);
+                */
     }
 
     public void SaveData(ref DataGame data)
@@ -157,8 +170,19 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
 
 
-        data.chunks = spawnedItems; //TODO - Здесь глюк.
-        Debug.Log("ЧАНКИИИ" + data.chunks);
+        data.chunks = spawnedItems;
+
+        for (int i = 0; i < spawnedItems.Count; i++)
+        {
+            data.chunks[i].begin = spawnedItems[i].begin;
+            data.chunks[i].end = spawnedItems[i].end;
+            data.chunks[i].teleportEnds = spawnedItems[i].teleportEnds;
+            data.chunks[i].playersDot = spawnedItems[i].playersDot;
+            data.chunks[i].TeleportationPlace = spawnedItems[i].TeleportationPlace;
+            data.chunks[i].teleport = spawnedItems[i].teleport;
+            data.chunks[i].DoorUp = spawnedItems[i].DoorUp;
+            data.chunks[i].spawnedEnemies = spawnedItems[i].spawnedEnemies;
+        }
 
         // data.chunks = JsonHelper.ToJson()
     }

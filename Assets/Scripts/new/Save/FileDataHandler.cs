@@ -70,4 +70,9 @@ public class FileDataHandler
         }
 
     }
+    public string GetFullPath()
+    {
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        return fullPath;
+    }
 }

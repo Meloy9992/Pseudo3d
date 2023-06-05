@@ -28,7 +28,7 @@ public class DataGame
 
     public DataGame()
     {
-        this.currentHpPlayer = -1;
+        this.currentHpPlayer = 20;
         this.isFlippedRight = false;
         this.SceneNumber = 0;
         this.countChunks = 1;

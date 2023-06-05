@@ -7,6 +7,8 @@ using Palmmedia.ReportGenerator.Core.Common;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System.IO;
+using Unity.VisualScripting;
 
 public class DataManager : MonoBehaviour
 {
@@ -34,10 +36,14 @@ public class DataManager : MonoBehaviour
     {
         QuickSave(); // Быстрое сохранение
         QuickLoad(); // Быстрая загрузка
-
-        if(button1 != null)
+        if(SceneManager.GetActiveScene().buildIndex == 0)
         {
-            button1.onClick.AddListener(() => { btnIsDown = true; });
+            button1 = GameObject.FindGameObjectWithTag("Button Load").GetComponent<UnityEngine.UI.Button>(); // Найти объект кнопка
+        }
+        if (button1 != null)
+        {
+            button1.onClick.AddListener(() => { btnIsDown = true; }); // Слушать нажата ли кнопка
+            Debug.Log("Кнопка нажата? " + btnIsDown + button1.name);
         }
     }
 
@@ -53,6 +59,7 @@ public class DataManager : MonoBehaviour
     public void NewGame()
     {
         this.dataGame = new DataGame(); // Создать новый объект с данным для сохранения
+        File.Delete(new FileDataHandler(Application.persistentDataPath, fileName).GetFullPath());
     }
 
     public void LoadGame()
@@ -63,26 +70,22 @@ public class DataManager : MonoBehaviour
         {
             Debug.Log("Данных не найдено. Инициализация новой игры");
             NewGame(); // Создать новые данные
-        }
-        button1 = FindObjectOfType<UnityEngine.UI.Button>();
-        
-        this.dataPersistenceObjects = FindAllDataPersist();
-        if (dataPersistenceObjects == null)
+        }       
+        this.dataPersistenceObjects = FindAllDataPersist(); // Найти данные сохранения
+        if (dataPersistenceObjects == null) // Если данные созранения равны нулю
         {
             Debug.LogError("Загрузочные данные равны нулю!");
 
-            return;
+            return; // Выйти из заугрузки данных
         }
 
         foreach(IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
         {
             dataPersist.LoadData(dataGame); // загрузить данные в файл
-            Debug.LogError("");
         }
 
         Debug.Log("Произошла загрузка параметров:  Местоположение персонажа: " + dataGame.currentPlacePlayer + " ХП: "
             + dataGame.currentHpPlayer + " игрок повернут на право? " + dataGame.isFlippedRight);
-
     }
 
     public void SaveGame()
@@ -90,12 +93,11 @@ public class DataManager : MonoBehaviour
         foreach(IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
         {
             dataPersist.SaveData(ref dataGame); // Сохранить данные в объект
-            if(dataPersist.GetType() == typeof(ChunkPlacer))
+/*            if(dataPersist.GetType() == typeof(ChunkPlacer))
             {
                 // Если тип чанк плейсер то выцепить из него список чанков и сохранить
 
-
-                List<SerializeChunk> serializeChunks = new List<SerializeChunk>();
+                List<SerializeChunk> serializeChunks = new List<SerializeChunk>(); 
                 foreach(var chunk in dataGame.chunks)
                 {
                     SerializeChunk chunk1 = new SerializeChunk(chunk);
@@ -103,11 +105,11 @@ public class DataManager : MonoBehaviour
                 }
 
                 //string json = JsonConvert.SerializeObject(dataGame.chunks.ToArray());
-                /*                string json = JsonSerializer.ToJsonString(serializeChunks.ToArray());
+                *//*                string json = JsonSerializer.ToJsonString(serializeChunks.ToArray());
                                 Debug.LogError(v);
-                                Debug.LogError(json);*/
+                                Debug.LogError(json);*//*
                 //dataPersist.SaveData();
-            }
+            }*/
         }
 
         Debug.Log("Произошло сохранение параметров:  Местоположение персонажа: " + dataGame.currentPlacePlayer + " ХП: "
@@ -139,37 +141,28 @@ public class DataManager : MonoBehaviour
 
     private List<IDataPersist> FindAllDataPersist() // Найти все доступные данные
     {
-        Debug.Log("");
-
-        IEnumerable<IDataPersist> dataPersistenceObjects = null;
-
-        Debug.LogError(btnIsDown);
-        if (SceneManager.GetActiveScene().buildIndex > 0)
+        IEnumerable<IDataPersist> dataPersistenceObjects = null; 
+        if (SceneManager.GetActiveScene().buildIndex > 0) // Если текущая сцена больше 0
         {
             dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
 
         } else
-        if(SceneManager.GetActiveScene().buildIndex == 0 && btnIsDown)
+        if(SceneManager.GetActiveScene().buildIndex == 0 && btnIsDown) // Если текущая сцена =0 и кнопка была нажата
         {
             SceneLoader.GetSceneById(SceneManager.GetActiveScene().buildIndex + 1); // Получить следующую сцену
             dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
-            SceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Загрузить следующую сцену с данными сохранения
         }
 
-        
-
-        //IEnumerable<IDataPersist> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
-        //IEnumerable<IDataPersist> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
-
-        if (dataPersistenceObjects == null)
+        if (dataPersistenceObjects == null) // Если данные не были загружены
         {
-            return null;
+            return null; // Вернуть null
         }
         return new List<IDataPersist>(dataPersistenceObjects); // Вернуть новый список с даными
     }
 
     private void ButtonClicked()
     {
-        btnIsDown = true;
+        btnIsDown = true; // Поставить маркер на нажатой кнопке
     }
 }
