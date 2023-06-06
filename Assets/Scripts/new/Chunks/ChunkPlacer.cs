@@ -17,10 +17,9 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
     public Chunk[] chunkPrefabs;
     public Chunk bossChunk;
 
-
-
     private List<Chunk> spawnedItems = new List<Chunk>();
-    private bool isDone = true;
+    private bool loadedIsDone = false;
+    private bool newGameIsDone = false;
 
     private void Start()
     {
@@ -51,17 +50,34 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         Debug.Log(spawnedItems.Count);
 
         // TODO - Баг. Последняя позиция телепорта больше чеи игрока. Слишком быстрое обновление
+        //Fade();
+        // spawnedItems = -8
+        // player = -89
 
         if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
         {
             Debug.Log("Z OS PLAYER " + player.transform.position.z);
-            Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count -1].name);
+            Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count - 1].name);
             Debug.Log("Z OS TELEPORT " + spawnedItems[spawnedItems.Count - 1].teleportEnds.position.z);
             SpawnChunk();
 
         }
     }
 
+
+    IEnumerator Fade()
+    {
+        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
+        {
+            Debug.Log("Z OS PLAYER " + player.transform.position.z);
+            Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count - 1].name);
+            Debug.Log("Z OS TELEPORT " + spawnedItems[spawnedItems.Count - 1].teleportEnds.position.z);
+            SpawnChunk();
+
+        }
+        //yield return new WaitForSeconds(.1f);
+        yield return null;
+    }
     public void SpawnChunk()
     {
 
@@ -119,10 +135,11 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
+            player.transform.position = data.currentPlacePlayer.normalized;
+            
             List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
             List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
 
-            // TODO - Разобраться откуда появляются еще 2 чанка
 
             for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
             { // Перебрать все имена из сохранения
@@ -133,12 +150,17 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                     {
                         placeChunk.Add(prefabs[j]); // добавить в список 
                         Debug.LogError("ПРЕФАБ ДОБАВЛЕН " + prefabs[j].name);
-                    }
+                        loadedIsDone = true;
+                }
                 }
             }
 
-            //placer.spawnedItems = placeChunk;
-            data.chunksPlace.RemoveAt(0);
+        //placer.spawnedItems = placeChunk;
+            if (data.chunksPlace != null || data.chunksPlace.Count != 0)
+            {
+                data.chunksPlace.RemoveAt(0);
+            }
+
             for (int i = 0; i < data.chunksPlace.Count; i++) // Перечислить все места чанков из сохранения
             {
                 // Префабов = 2 [0, 1]
@@ -156,7 +178,10 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         if(spawnedItems.Count == 0)
         {
             spawnedItems.Add(firstChunk);
+            newGameIsDone = true;
         }
+
+        
         //spawnedItems = data.chunks;
 
         /*        //spawnedItems.LastOrDefault().enemies = ;
