@@ -206,8 +206,8 @@ public class Player : Character , IDataPersist
     {
         this.health = data.currentHpPlayer; // Загрзить здоровье из сохранения
         this.flipRight = data.isFlippedRight; // Загрузить поворт из сохранения
-/*        this.vectorToSafe = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
-        this.vector = data.currentPlacePlayer;*/
+        this.vectorToSafe = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
+        this.vector = data.currentPlacePlayer;
         transform.position = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
         idScene = data.SceneNumber; // Загрузить id уровня из сохранения
     }

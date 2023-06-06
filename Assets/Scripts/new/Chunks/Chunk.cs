@@ -187,40 +187,7 @@ public class Chunk : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-        ChunkPlacer placer = FindAnyObjectByType<ChunkPlacer>().GetComponent<ChunkPlacer>(); // Получение плейсера чанков
-        List<Chunk> prefabs = placer.chunkPrefabs.ToList(); // Префабы уровней
-        List<Chunk> chunks = FindObjectsOfType<Chunk>().ToList(); // Все чанки
-        List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
-
-        for (int i = 0; i < chunks.Count; i++)
-        {
-            if (chunks[i].name.Equals("Main Chunk"))
-            {
-                prefabs.Add(chunks[i]); // Добавляем Main chunk в префабы
-            }
-        }
         this.spawnedEnemies = data.generateEnemy; // Получение из сохранения заспавненых врагов
-
-        for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
-        { // Перебрать все имена из сохранения
-            for (int j = 0; j < prefabs.Count; j++) // Получить количество префабов
-            { // Перебрать все имена из префабов
-                if (prefabs[j].name.Equals(data.chunksName[i])) // Если имя префаба совпало с именем чанка
-                {
-                    placeChunk.Add(prefabs[j]); // добавить в список 
-                    Debug.LogError("ПРЕФАБ ДОБАВЛЕН " + prefabs[j].name);
-                }
-            }
-        }
-
-        for (int i = 0; i < data.chunksPlace.Count; i++) // Перечислить все места чанков из сохранения
-        {
-            this.name = data.chunksName[i]; // Имя чанка = имени чанка их сохранения
-
-            Instantiate(placeChunk[i], 
-                        data.chunksPlace[i],
-                        transform.rotation); // Разместить чанк по координам из сохранения
-        }
     }
 
     public void SaveData(ref DataGame data)

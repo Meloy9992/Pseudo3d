@@ -47,13 +47,17 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         {
             //Debug.LogException(ex);
         }
+        Debug.Log(spawnedItems.Count);
+        Debug.Log(spawnedItems.Count);
+
+        // TODO - Баг. Последняя позиция телепорта больше чеи игрока. Слишком быстрое обновление
 
         if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
         {
             Debug.Log("Z OS PLAYER " + player.transform.position.z);
+            Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count -1].name);
             Debug.Log("Z OS TELEPORT " + spawnedItems[spawnedItems.Count - 1].teleportEnds.position.z);
             SpawnChunk();
-
 
         }
     }
@@ -115,41 +119,80 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-        //spawnedItems.LastOrDefault().enemies = ;
-        if(data.chunks != null)
-        {
-            if (data.chunks.Count != 0)
-            {
-                Debug.LogError("Текущие чанки " + spawnedItems);
-                spawnedItems = data.chunks; // Получение чанков из сохранения
+            List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
+            List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
 
-/*                foreach (Chunk chunk in spawnedItems)
-                {
-                    Instantiate(chunk.transform,
-                            transform.position,
-                            transform.rotation);
-                }*/
+            // TODO - Разобраться откуда появляются еще 2 чанка
 
-                for(int i = 0; i < spawnedItems.Count; i++)
-                {
-/*                    Chunk chunk = new Chunk();*/
-                    Debug.Log(data.chunksName[i]);
-                    Debug.LogError(data.chunks[i].name);
-/*                    this.name = data.chunksName[i];
-                    this.transform.position = data.chunksPlace[i];*/
-
-/*                    Instantiate(this.transform,
-                                transform.position,
-                                transform.rotation);*/
-
+            for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
+            { // Перебрать все имена из сохранения
+                for (int j = 0; j < prefabs.Count; j++) // Получить количество префабов
+                { // Перебрать все имена из префабов
+                
+                if (prefabs[j].name.Equals(data.chunksName[i])) // Если имя префаба совпало с именем чанка
+                    {
+                        placeChunk.Add(prefabs[j]); // добавить в список 
+                        Debug.LogError("ПРЕФАБ ДОБАВЛЕН " + prefabs[j].name);
+                    }
                 }
-                Debug.LogError("Обновленные чанки " + spawnedItems);
             }
-            else
+
+            //placer.spawnedItems = placeChunk;
+            data.chunksPlace.RemoveAt(0);
+            for (int i = 0; i < data.chunksPlace.Count; i++) // Перечислить все места чанков из сохранения
             {
-                Debug.LogError("Данные сохранения равны нулю");
+                // Префабов = 2 [0, 1]
+                // ЧАНКОВ 3  [0, 1, 2]
+                Debug.LogError(" I в цикле = " + i + " Количество чанков из координат = " + data.chunksPlace.Count);
+                //placeChunk[i].name = data.chunksName[i]; // Имя чанка = имени чанка их сохранения
+
+                Instantiate(placeChunk[i],
+                            data.chunksPlace[i],
+                            transform.rotation); // Разместить чанк по координам из сохранения
             }
+            spawnedItems = placeChunk;
+
+
+        if(spawnedItems.Count == 0)
+        {
+            spawnedItems.Add(firstChunk);
         }
+        //spawnedItems = data.chunks;
+
+        /*        //spawnedItems.LastOrDefault().enemies = ;
+                if(data.chunks != null)
+                {
+                    if (data.chunks.Count != 0)
+                    {
+                        Debug.LogError("Текущие чанки " + spawnedItems);
+                        spawnedItems = data.chunks; // Получение чанков из сохранения
+
+        *//*                foreach (Chunk chunk in spawnedItems)
+                        {
+                            Instantiate(chunk.transform,
+                                    transform.position,
+                                    transform.rotation);
+                        }*//*
+
+                        for(int i = 0; i < spawnedItems.Count; i++)
+                        {
+        *//*                    Chunk chunk = new Chunk();*//*
+                            Debug.Log(data.chunksName[i]);
+        *//*                    this.name = data.chunksName[i];
+                            this.transform.position = data.chunksPlace[i];*/
+
+        /*                    Instantiate(this.transform,
+                                        transform.position,
+                                        transform.rotation);*//*
+
+                        }
+                        Debug.LogError("Обновленные чанки " + spawnedItems);
+                    }
+                    else
+                    {
+                        Debug.LogError("Данные сохранения равны нулю");
+                    }
+                }*/
 
         /*        for (int i = 0; i < data.spawnedEnemy.Count; i++)
                 {

@@ -526,6 +526,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Chunk
       objectReference: {fileID: 0}
+    - target: {fileID: 1614161909035304448, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
+      propertyPath: m_TagString
+      value: Main Chunk
+      objectReference: {fileID: 0}
     - target: {fileID: 1614161909035304478, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
       propertyPath: teleport
       value: 

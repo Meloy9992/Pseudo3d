@@ -160,9 +160,4 @@ public class DataManager : MonoBehaviour
         }
         return new List<IDataPersist>(dataPersistenceObjects); // Вернуть новый список с даными
     }
-
-    private void ButtonClicked()
-    {
-        btnIsDown = true; // Поставить маркер на нажатой кнопке
-    }
 }
