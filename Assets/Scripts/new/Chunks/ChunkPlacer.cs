@@ -54,11 +54,11 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         // spawnedItems = -8
         // player = -89
 
-        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
+        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].transform.position.z)
         {
             Debug.Log("Z OS PLAYER " + player.transform.position.z);
             Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count - 1].name);
-            Debug.Log("Z OS TELEPORT " + spawnedItems[spawnedItems.Count - 1].teleportEnds.position.z);
+            Debug.Log("Z OS " + spawnedItems[spawnedItems.Count - 1].transform.position.z);
             SpawnChunk();
 
         }
@@ -113,7 +113,8 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         newChunk.transform.position =
             spawnedItems[spawnedItems.Count - 1].end.position
                 - newChunk.begin.localPosition + new Vector3(0, 0, -25); // Получение позиции нового чанка через позицию последнего чанка
-
+        Debug.Log("Название чанка куда телепортируемся " + newChunk.name);
+        Debug.Log("Координаты Z " + newChunk.transform.position.z);
         spawnedItems.Add(newChunk); // Добавить новый чанк
     }
 
@@ -134,12 +135,9 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
     }
 
     public void LoadData(DataGame data)
-    {
-            player.transform.position = data.currentPlacePlayer.normalized;
-            
+    {       
             List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
             List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
-
 
             for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
             { // Перебрать все имена из сохранения
@@ -155,7 +153,6 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                 }
             }
 
-        //placer.spawnedItems = placeChunk;
             if (data.chunksPlace != null || data.chunksPlace.Count != 0)
             {
                 data.chunksPlace.RemoveAt(0);
@@ -166,14 +163,19 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                 // Префабов = 2 [0, 1]
                 // ЧАНКОВ 3  [0, 1, 2]
                 Debug.LogError(" I в цикле = " + i + " Количество чанков из координат = " + data.chunksPlace.Count);
-                //placeChunk[i].name = data.chunksName[i]; // Имя чанка = имени чанка их сохранения
-
-                Instantiate(placeChunk[i],
-                            data.chunksPlace[i],
-                            transform.rotation); // Разместить чанк по координам из сохранения
+            //placeChunk[i].name = data.chunksName[i]; // Имя чанка = имени чанка их сохранения
+                Debug.LogError("Название чанка " + placeChunk[i].name + " Координаты этого чанка по оси Z " + data.chunksPlace[i]);
+                placeChunk[i].transform.position = data.chunksPlace[i];
+                Instantiate(placeChunk[i]); // Разместить чанк по координам из сохранения
+                Debug.LogError("Координаты которые на самом деле " + placeChunk[i].transform.position.z);
+        }
+                if(spawnedItems.Count == 1)
+        {
+            foreach (Chunk chunk in placeChunk)
+            {
+                spawnedItems.Add(chunk);
             }
-            spawnedItems = placeChunk;
-
+        }
 
         if(spawnedItems.Count == 0)
         {
@@ -181,7 +183,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             newGameIsDone = true;
         }
 
-        
+
         //spawnedItems = data.chunks;
 
         /*        //spawnedItems.LastOrDefault().enemies = ;

@@ -144,8 +144,10 @@ public class DataManager : MonoBehaviour
         IEnumerable<IDataPersist> dataPersistenceObjects = null; 
         if (SceneManager.GetActiveScene().buildIndex > 0) // Если текущая сцена больше 0
         {
+            // Сначала добавить все элементы массива IEnumerable
+            // После чего добавить 0 элемент в последний
             dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
-
+            
         } else
         if(SceneManager.GetActiveScene().buildIndex == 0 && btnIsDown) // Если текущая сцена =0 и кнопка была нажата
         {
@@ -158,6 +160,7 @@ public class DataManager : MonoBehaviour
         {
             return null; // Вернуть null
         }
-        return new List<IDataPersist>(dataPersistenceObjects); // Вернуть новый список с даными
+        
+        return new List<IDataPersist>(Enumerable.Reverse(dataPersistenceObjects).ToList()); // Вернуть новый список с даными
     }
 }
