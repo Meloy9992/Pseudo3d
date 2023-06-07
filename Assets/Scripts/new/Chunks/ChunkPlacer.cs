@@ -54,7 +54,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         // spawnedItems = -8
         // player = -89
 
-        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].transform.position.z)
+        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
         {
             Debug.Log("Z OS PLAYER " + player.transform.position.z);
             Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count - 1].name);
@@ -64,20 +64,6 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         }
     }
 
-
-    IEnumerator Fade()
-    {
-        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
-        {
-            Debug.Log("Z OS PLAYER " + player.transform.position.z);
-            Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count - 1].name);
-            Debug.Log("Z OS TELEPORT " + spawnedItems[spawnedItems.Count - 1].teleportEnds.position.z);
-            SpawnChunk();
-
-        }
-        //yield return new WaitForSeconds(.1f);
-        yield return null;
-    }
     public void SpawnChunk()
     {
 

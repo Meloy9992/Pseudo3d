@@ -65,7 +65,6 @@ public class Player : Character , IDataPersist
         {
             SwitchWeapon(); // смена оружия
         }
-
     }
     private void OnTriggerEnter(Collider other)
     {
