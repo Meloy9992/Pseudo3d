@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 2227490730711345600}
   - component: {fileID: 2227490730711345603}
   - component: {fileID: 2227490730711345602}
-  - component: {fileID: 2245435023425734346}
+  - component: {fileID: 8897817019674028118}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -245,7 +245,7 @@ MonoBehaviour:
   maxGravity: -15
   gravityDirection: {x: 0, y: 0, z: 0}
   gravityMovement: {x: 0, y: 0, z: 0}
---- !u!114 &2245435023425734346
+--- !u!114 &8897817019674028118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

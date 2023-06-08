@@ -50,7 +50,7 @@ public class Player : Character , IDataPersist
         playerInput = new ControllerInput(); // Получить контроллер ввода
 
         playerMove = new PlayerMove(playerInput, vector, playerSettings, animator); // Получить движение игрока внедряя в класс параметры
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
 
 
@@ -230,7 +230,7 @@ public class Player : Character , IDataPersist
         this.flipRight = data.isFlippedRight; // Загрузить поворт из сохранения
         this.vectorToSafe = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
         this.vector = data.currentPlacePlayer;
-        transform.position = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
+       // transform.position = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
         idScene = data.SceneNumber; // Загрузить id уровня из сохранения
     }
 

@@ -29,7 +29,7 @@ public class DataManager : MonoBehaviour
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName); // Указываем формат и название файл куда будет сохраняться/загружаться
         this.dataPersistenceObjects = FindAllDataPersist(); // Найти все данные
-       // LoadGame(); // Загрузить игру
+        LoadGame(); // Загрузить игру
     }
 
     private void Update()
@@ -90,11 +90,26 @@ public class DataManager : MonoBehaviour
 
     public void SaveGame()
     {
-        this.dataGame = new DataGame(); // Вызвать метод загрузки
-        this.dataPersistenceObjects = FindAllDataPersist(); // Найти данные сохранения
-        foreach (IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
+        foreach(IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
         {
             dataPersist.SaveData(ref dataGame); // Сохранить данные в объект
+/*            if(dataPersist.GetType() == typeof(ChunkPlacer))
+            {
+                // Если тип чанк плейсер то выцепить из него список чанков и сохранить
+
+                List<SerializeChunk> serializeChunks = new List<SerializeChunk>(); 
+                foreach(var chunk in dataGame.chunks)
+                {
+                    SerializeChunk chunk1 = new SerializeChunk(chunk);
+                    serializeChunks.Add(chunk1);
+                }
+
+                //string json = JsonConvert.SerializeObject(dataGame.chunks.ToArray());
+                *//*                string json = JsonSerializer.ToJsonString(serializeChunks.ToArray());
+                                Debug.LogError(v);
+                                Debug.LogError(json);*//*
+                //dataPersist.SaveData();
+            }*/
         }
 
         Debug.Log("Произошло сохранение параметров:  Местоположение персонажа: " + dataGame.currentPlacePlayer + " ХП: "
@@ -112,7 +127,6 @@ public class DataManager : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.F5)) // Сохранить игру на нажатие f5
         {
-
             SaveGame();
         }
     }
@@ -130,13 +144,14 @@ public class DataManager : MonoBehaviour
         IEnumerable<IDataPersist> dataPersistenceObjects = null; 
         if (SceneManager.GetActiveScene().buildIndex > 0) // Если текущая сцена больше 0
         {
+            // Сначала добавить все элементы массива IEnumerable
+            // После чего добавить 0 элемент в последний
             dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
             
         } else
         if(SceneManager.GetActiveScene().buildIndex == 0 && btnIsDown) // Если текущая сцена =0 и кнопка была нажата
         {
             SceneLoader.GetSceneById(SceneManager.GetActiveScene().buildIndex + 1); // Получить следующую сцену
-            Debug.LogError("ID СЛУДУЮЩЕЙ СЦЕНЫ " + SceneManager.GetActiveScene().buildIndex + 1);
             dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>(); // Найти все данные с типом MonoBehaviour и типом IDataPersist
             SceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Загрузить следующую сцену с данными сохранения
         }

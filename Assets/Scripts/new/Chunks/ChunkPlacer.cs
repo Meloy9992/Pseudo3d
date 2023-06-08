@@ -23,7 +23,8 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     private void Start()
     {
-        spawnedItems.Add(firstChunk);
+/*        spawnedItems.Add(firstChunk);
+        Debug.LogError("Добавлен первый чанк " + spawnedItems.Count + " " + spawnedItems[spawnedItems.Count - 1].name);*/
     }
 
     private void Update()
@@ -32,6 +33,11 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         int idNextScene = SceneManager.GetActiveScene().buildIndex + 1;
 
+        if(spawnedItems.Count == 0)
+        {
+            spawnedItems.Add(firstChunk);
+        }
+
         try
         {
             if (SceneManager.GetSceneByBuildIndex(idNextScene).isLoaded ) // Если следующая сцена загружена то
@@ -39,6 +45,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                 int idPreviouse = idNextScene - 1;
                 int indexMaxScene = SceneManager.sceneCountInBuildSettings - 1;
                 player.transform.position = new Vector3(0, 0, 0);
+                Debug.LogError("Координаты игрока " + player.transform.position);
                 Debug.Log("МАКСИМАЛЬНОЕ КОЛИЧЕСТВО СЦЕН" + indexMaxScene);
                 if (SceneManager.GetActiveScene().buildIndex == indexMaxScene) // Если текущий индекс равен максимальному то
                 {
@@ -64,11 +71,11 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         Debug.Log("" + spawnedItems.Count);
 
-        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].teleport.transform.position.z)
+        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
         {
             Debug.Log("Z OS PLAYER " + player.transform.position.z);
             Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count - 1].name);
-            Debug.Log("Z OS " + spawnedItems[spawnedItems.Count - 1].transform.position.z);
+            Debug.Log("Z OS " + spawnedItems[spawnedItems.Count - 1].end.position.z);
             SpawnChunk();
 
         }
@@ -131,12 +138,13 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         if (!SceneManager.GetSceneByBuildIndex(idNextScene).isLoaded)
         {
             Debug.Log("ID следующей сцены " + idNextScene + " ID текущей сцены" + SceneManager.GetActiveScene().buildIndex);
-            SceneManager.LoadScene(idNextScene); //Загрузить след сцену , LoadSceneMode.Additive
+            SceneManager.LoadScene(idNextScene, LoadSceneMode.Additive); //Загрузить след сцену , LoadSceneMode.Additive
 
             Scene sceneToLoad = SceneManager.GetSceneByBuildIndex(idNextScene); //Получить след сцену
 
+            
 
-            //SceneManager.MoveGameObjectToScene(player.gameObject, sceneToLoad); // Переместить персонажа на след сцену
+            SceneManager.MoveGameObjectToScene(player.gameObject, sceneToLoad); // Переместить персонажа на след сцену
 
         }
 
@@ -161,24 +169,26 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
                     if (prefabs[j].name.Equals(data.chunksName[i])) // Если имя префаба совпало с именем чанка
                     {
-                        placeChunk.Add(prefabs[j]); // добавить в список 
+                        placeChunk.Add(prefabs[j]); // добавить в список для размещения чанков
                         Debug.LogError("Префаб добавлен " + prefabs[j].name);
                         loadedIsDone = true;
                     }
                 }
             }
 
-            if (data.chunksPlace != null)
+            if (data.chunksPlace != null) // Если список с координатами != 0
             {
-                if (data.chunksPlace.Count != 0)
+                if (data.chunksPlace.Count != 0) // И если количество данных != 0
                 {
-                    data.chunksName.RemoveAt(0);
-                    data.chunksPlace.RemoveAt(0);
+                    if (data.chunksName[0].Equals("Main Chunk"))
+                    {
+                        data.chunksName.RemoveAt(0); // 
+                        data.chunksPlace.RemoveAt(0); // 
+                    }
                 }
-
             }
 
-            if (placeChunk.Count == 4)
+            if (placeChunk.Count == 3)
             {
                 placeChunk.Add(bossChunk);
             }
@@ -187,18 +197,22 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             {
                 Debug.LogError(" I в цикле = " + i + " Количество чанков из координат = " + data.chunksPlace.Count);
                 Debug.LogError("Название чанка " + placeChunk[i].name + " Координаты этого чанка по оси Z " + data.chunksPlace[i]);
-                //placeChunk[i].transform.position = data.chunksPlace[i];
+                placeChunk[i].transform.position = data.chunksPlace[i];
                 Instantiate(placeChunk[i]); // Разместить чанк по координам из сохранения
                 placeChunk[i].transform.position = data.chunksPlace[i];
                 Debug.LogError("Координаты которые на самом деле " + placeChunk[i].transform.position.z);
             }
-/*            if (spawnedItems.Count == 1)
+
+        if (spawnedItems.Count == 0)
+        {
+            //spawnedItems.Add(firstChunk);
+            foreach (Chunk chunk in placeChunk)
             {
-                foreach (Chunk chunk in placeChunk)
-                {
-                    spawnedItems.Add(chunk);
-                }
-            }*/
+                spawnedItems.Add(chunk);
+            }
+        }
+
+        player.transform.position = data.currentPlacePlayer;
 
     }
 
