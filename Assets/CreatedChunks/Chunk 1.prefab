@@ -1596,7 +1596,7 @@ Animator:
   m_GameObject: {fileID: 673812357055493492}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1073e3524d8a2a94fa7fed938958237f, type: 2}
+  m_Controller: {fileID: 9100000, guid: fe9ed9084259cf04baf0f146403659e2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2610,16 +2610,19 @@ MonoBehaviour:
   - {fileID: 673812357055493475}
   allItems: []
   EnemyPrefabs:
-  - {fileID: 673812357055493475}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5216388250117919517, guid: 65b0f517b762acc4789208d9b6659951, type: 3}
+  - {fileID: 9141433220563125652, guid: 848d476a80510ea4784cd9f289d04126, type: 3}
+  - {fileID: 453967844322740324, guid: a3e79059e2575cb4bbbc40c774f5b9f2, type: 3}
   startingEnemy: {fileID: 673812357055493475}
   startingGrass: {fileID: 673812356999727859}
   GrassMaterials:
-  - {fileID: 2100000, guid: 1a3907064adbdb04591fe2df2c4be3f7, type: 2}
-  - {fileID: 2100000, guid: 7df44a435f524b04b8c01c12d98b0561, type: 2}
-  - {fileID: 2100000, guid: b7720725f54d4294fb1e303a28a099de, type: 2}
-  - {fileID: 2100000, guid: 52dbb2a01fa963f44ad4541fa0e2689d, type: 2}
+  - {fileID: 2100000, guid: de4d24ab8d4eac142bd683bc9456bbf2, type: 2}
+  - {fileID: 2100000, guid: a0682fcb3b731e248af0cdb7c04ef02d, type: 2}
+  - {fileID: 2100000, guid: 9fc333a9d72fd944f9e60101620c4023, type: 2}
+  - {fileID: 2100000, guid: b661dde909fb0b14086d0040f952b9c8, type: 2}
+  - {fileID: 2100000, guid: dd97c6165731bb148b610761539a0a74, type: 2}
+  - {fileID: 2100000, guid: dcc7b031454bb464b98ac55c054a3afd, type: 2}
+  - {fileID: 2100000, guid: d93ff0d5e86cb6448bbea2750cea038f, type: 2}
 --- !u!1 &673812357666176964
 GameObject:
   m_ObjectHideFlags: 0

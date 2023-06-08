@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 563670976}
   m_Layer: 5
   m_Name: Hp
-  m_TagString: Untagged
+  m_TagString: Health
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -925,7 +925,10 @@ MonoBehaviour:
   firstChunk: {fileID: 1614161909035304478, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
   chunkPrefabs:
   - {fileID: 673812357659634858, guid: 9cceaad59bf69b545ac0b7822a7f82c8, type: 3}
-  - {fileID: 673812357659634858, guid: ec24836b57627da4bb68d8e215af7d79, type: 3}
+  - {fileID: 673812357659634858, guid: f0a6f7baa01074a4e9e17546ff065d8e, type: 3}
+  - {fileID: 673812357659634858, guid: ecf71ad9ccfd52347aa014bea0596583, type: 3}
+  - {fileID: 673812357659634858, guid: 7afff97860818564d9f161e3a04cb437, type: 3}
+  - {fileID: 673812357659634858, guid: 7427d7b2d897bcf44bcaffe76de66d96, type: 3}
   bossChunk: {fileID: 1614161909035304478, guid: 592ab9d899bb73744aafcf800c3fdc54, type: 3}
 --- !u!4 &1947243898
 Transform:

@@ -15,6 +15,7 @@ TagManager:
   - Button Load
   - Button New Game
   - Main Chunk
+  - Health
   layers:
   - Default
   - TransparentFX

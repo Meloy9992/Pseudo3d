@@ -536,11 +536,11 @@ MonoBehaviour:
   DoorLeft: {fileID: 0}
   FoundedTagName: Enemy
   enemies:
-  - {fileID: 0}
+  - {fileID: 7660305729928704311}
   allItems: []
   EnemyPrefabs:
-  - {fileID: 0}
-  startingEnemy: {fileID: 0}
+  - {fileID: 7660305729928704311}
+  startingEnemy: {fileID: 7660305729928704311}
   startingGrass: {fileID: 0}
   GrassMaterials: []
 --- !u!1 &1614161909041583472
@@ -1108,3 +1108,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5272761254236856737, guid: 848d476a80510ea4784cd9f289d04126, type: 3}
   m_PrefabInstance: {fileID: 1482311467298780323}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7660305729928704311 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9141433220563125652, guid: 848d476a80510ea4784cd9f289d04126, type: 3}
+  m_PrefabInstance: {fileID: 1482311467298780323}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d3a94d0fee66f4a8460d565c440cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -61,16 +61,20 @@ public class Player : Character , IDataPersist
         idScene = SceneManager.GetActiveScene().buildIndex;
         gravity.Gravitation(); //Гравитация
 
+        FoundPowerUpTimer();
+
+        FoundImageOnCanvas();
+
         if (Input.GetKeyDown(KeyCode.Q)) // если нажата q то вменить оружие
         {
             SwitchWeapon(); // смена оружия
         }
+
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Power Up")) // если встречен тэг power up 
         {
-            FoundPowerUpTimer();
             boosters(other); // включение бустера
 
         }
@@ -134,7 +138,14 @@ public class Player : Character , IDataPersist
 
     public void displayHealth()
     {
-        healthDisplay.text = "HP: " + health; // отобразить ХП на экране
+        if (healthDisplay != null)
+        {
+            healthDisplay.text = "HP: " + health; // отобразить ХП на экране
+        }
+        else
+        {
+            healthDisplay = GameObject.FindGameObjectWithTag("Health").GetComponent<Text>();
+        }
     }
 
 
@@ -191,13 +202,24 @@ public class Player : Character , IDataPersist
 
     public void FoundPowerUpTimer()
     {
-        FishBooster[] obj = Resources.FindObjectsOfTypeAll<FishBooster>(); // Найти в ресурсах объекты с типом FishBooster
-        foreach (var item in obj)
+        if (ribovTimer == null)
         {
-            if (item.name == "Power Up Timer") // Если у объекта название совпало
+            FishBooster[] obj = Resources.FindObjectsOfTypeAll<FishBooster>(); // Найти в ресурсах объекты с типом FishBooster
+            foreach (var item in obj)
             {
-                ribovTimer = item; // Присвоить таймеру элемент
+                if (item.name.Equals("Power Up Timer")) // Если у объекта название совпало
+                {
+                    ribovTimer = item; // Присвоить таймеру элемент
+                }
             }
+        }
+    }
+
+    public void FoundImageOnCanvas()
+    {
+        if(weaponIcon == null)
+        {
+            weaponIcon = GameObject.FindGameObjectWithTag("Weapon Image").GetComponent<Image>();
         }
     }
 

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy attack
+  m_Name: Fox passive
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,15 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 7d5fc29009aef9649830c5ad945e1f90, type: 3}
-    - time: 0.083333336
-      value: {fileID: 21300000, guid: 313210ef23da2884d91f413d500d0247, type: 3}
+      value: {fileID: 1194010627, guid: e2e24ebedcc82f2468ac119032848c09, type: 3}
     - time: 0.16666667
-      value: {fileID: 21300000, guid: b4c3506c4961e214dbfe51cfb159738d, type: 3}
-    - time: 0.25
-      value: {fileID: 21300000, guid: 6c72b1402d506124288112c0bc3bdb35, type: 3}
-    - time: 0.33333334
-      value: {fileID: 21300000, guid: e82ba3693f298cc4195e38d5e13611a2, type: 3}
+      value: {fileID: 1194010627, guid: e2e24ebedcc82f2468ac119032848c09, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,17 +42,14 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 7d5fc29009aef9649830c5ad945e1f90, type: 3}
-    - {fileID: 21300000, guid: 313210ef23da2884d91f413d500d0247, type: 3}
-    - {fileID: 21300000, guid: b4c3506c4961e214dbfe51cfb159738d, type: 3}
-    - {fileID: 21300000, guid: 6c72b1402d506124288112c0bc3bdb35, type: 3}
-    - {fileID: 21300000, guid: e82ba3693f298cc4195e38d5e13611a2, type: 3}
+    - {fileID: 1194010627, guid: e2e24ebedcc82f2468ac119032848c09, type: 3}
+    - {fileID: 1194010627, guid: e2e24ebedcc82f2468ac119032848c09, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.35000002
+    m_StopTime: 0.18333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

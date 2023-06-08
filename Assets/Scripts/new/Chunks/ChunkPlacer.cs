@@ -139,9 +139,13 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                 }
             }
 
-            if (data.chunksPlace != null || data.chunksPlace.Count != 0)
+            if (data.chunksPlace != null)
+            {
+                if(data.chunksPlace.Count != 0)
             {
                 data.chunksPlace.RemoveAt(0);
+            }
+
             }
 
             for (int i = 0; i < data.chunksPlace.Count; i++) // Перечислить все места чанков из сохранения
