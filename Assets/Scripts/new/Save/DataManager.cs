@@ -92,6 +92,10 @@ public class DataManager : MonoBehaviour
     {
         foreach(IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
         {
+            for (int i = 0; i < dataPersistenceObjects.Count; i++)
+            {
+                Debug.LogError("" + dataPersistenceObjects[i]);
+            }
             dataPersist.SaveData(ref dataGame); // Сохранить данные в объект
 /*            if(dataPersist.GetType() == typeof(ChunkPlacer))
             {

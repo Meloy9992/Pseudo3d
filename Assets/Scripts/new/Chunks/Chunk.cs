@@ -193,7 +193,7 @@ public class Chunk : MonoBehaviour, IDataPersist
     public void SaveData(ref DataGame data)
     {
         data.generateEnemy = this.spawnedEnemies;
-/*        data.chunksName.Add(this.name);
-        data.chunksPlace.Add(this.transform.position);*/
     }
+
+
 }

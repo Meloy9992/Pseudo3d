@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\new\Gravity.cs" />
     <Compile Include="Assets\Scripts\new\Interfaces\IFlip.cs" />
     <Compile Include="Assets\Scripts\new\Save\SerializableList.cs" />
+    <Compile Include="Assets\Scripts\new\QuitGame.cs" />
     <Compile Include="Assets\Scripts\new\Camera\Cam_move.cs" />
     <Compile Include="Assets\Scripts\new\Weapon\Weapon.cs" />
     <Compile Include="Assets\Scripts\new\Player\Player.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="Assets\Scripts\new\Player\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\new\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\new\Player\Player_attack.cs" />
-    <Compile Include="Assets\Scripts\new\QuitGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
