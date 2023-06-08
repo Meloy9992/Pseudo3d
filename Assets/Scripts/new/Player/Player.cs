@@ -50,6 +50,7 @@ public class Player : Character , IDataPersist
         playerInput = new ControllerInput(); // Получить контроллер ввода
 
         playerMove = new PlayerMove(playerInput, vector, playerSettings, animator); // Получить движение игрока внедряя в класс параметры
+        DontDestroyOnLoad(this.gameObject);
     }
 
 

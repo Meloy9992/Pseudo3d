@@ -34,19 +34,26 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         try
         {
-            if (SceneManager.GetSceneByBuildIndex(idNextScene).isLoaded)
+            if (SceneManager.GetSceneByBuildIndex(idNextScene).isLoaded ) // Если следующая сцена загружена то
             {
                 int idPreviouse = idNextScene - 1;
                 int indexMaxScene = SceneManager.sceneCountInBuildSettings - 1;
-                Debug.Log("МАКСИМАЛЬНОЕ КОЛИЧЕСТВО СЦЕН" + SceneManager.sceneCountInBuildSettings);
-                if(SceneManager.GetActiveScene().buildIndex == indexMaxScene)
+                player.transform.position = new Vector3(0, 0, 0);
+                Debug.Log("МАКСИМАЛЬНОЕ КОЛИЧЕСТВО СЦЕН" + indexMaxScene);
+                if (SceneManager.GetActiveScene().buildIndex == indexMaxScene) // Если текущий индекс равен максимальному то
                 {
-                    Debug.Log("Конец игры");
+                    Debug.LogError("Конец игры"); // Вывести сообщение
                 } else
                 {
                     SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(idPreviouse)); //Выгрузить предыдущую сцену
-                    SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(idNextScene)); // Сделать активным новую сцену
-                    player.transform.position = firstChunk.playersDot.position;
+                    if (!SceneManager.GetSceneByBuildIndex(idPreviouse).isLoaded)
+                    {
+                        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(idNextScene)); // Сделать активным новую сцену
+                        Debug.LogError("Новая сцена загружена");
+                        Debug.LogError("Количество чанков после загрузки сцены " + spawnedItems.Count);
+                        player.transform.position = firstChunk.playersDot.position;
+                    }
+
                 }
             }
         }
@@ -57,7 +64,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         Debug.Log("" + spawnedItems.Count);
 
-        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
+        if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].teleport.transform.position.z)
         {
             Debug.Log("Z OS PLAYER " + player.transform.position.z);
             Debug.Log("LAST CHUNK NAME " + spawnedItems[spawnedItems.Count - 1].name);
@@ -65,6 +72,17 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             SpawnChunk();
 
         }
+    }
+
+    private void Awake()
+    {
+/*        spawnedItems.Clear();
+        Debug.LogError("Очищен список " + spawnedItems.Count);*/
+/*        if (spawnedItems.Count == 0)
+        {
+            Debug.LogError("Добавлен первый чанк в список");
+            spawnedItems.Add(firstChunk);
+        }*/
     }
 
     public void SpawnChunk()
@@ -113,11 +131,12 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         if (!SceneManager.GetSceneByBuildIndex(idNextScene).isLoaded)
         {
             Debug.Log("ID следующей сцены " + idNextScene + " ID текущей сцены" + SceneManager.GetActiveScene().buildIndex);
-            SceneManager.LoadScene(idNextScene, LoadSceneMode.Additive); //Загрузить след сцену
+            SceneManager.LoadScene(idNextScene); //Загрузить след сцену , LoadSceneMode.Additive
 
             Scene sceneToLoad = SceneManager.GetSceneByBuildIndex(idNextScene); //Получить след сцену
 
-            SceneManager.MoveGameObjectToScene(player.gameObject, sceneToLoad); // Переместить персонажа на след сцену
+
+            //SceneManager.MoveGameObjectToScene(player.gameObject, sceneToLoad); // Переместить персонажа на след сцену
 
         }
 
@@ -125,6 +144,13 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {       
+           
+/*        if(spawnedItems.Count == 0)
+        {
+            spawnedItems.Add(firstChunk);
+            newGameIsDone = true;
+        } else*/
+
             List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
             List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
 
@@ -132,51 +158,48 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             { // Перебрать все имена из сохранения
                 for (int j = 0; j < prefabs.Count; j++) // Получить количество префабов
                 { // Перебрать все имена из префабов
-                
-                if (prefabs[j].name.Equals(data.chunksName[i])) // Если имя префаба совпало с именем чанка
+
+                    if (prefabs[j].name.Equals(data.chunksName[i])) // Если имя префаба совпало с именем чанка
                     {
                         placeChunk.Add(prefabs[j]); // добавить в список 
                         Debug.LogError("Префаб добавлен " + prefabs[j].name);
                         loadedIsDone = true;
-                }
+                    }
                 }
             }
 
             if (data.chunksPlace != null)
             {
-                if(data.chunksPlace.Count != 0)
+                if (data.chunksPlace.Count != 0)
                 {
-                data.chunksPlace.RemoveAt(0);
+                    data.chunksName.RemoveAt(0);
+                    data.chunksPlace.RemoveAt(0);
                 }
 
             }
 
-            if(placeChunk.Count == 4)
-                {
-                    placeChunk.Add(bossChunk);
-                }
+            if (placeChunk.Count == 4)
+            {
+                placeChunk.Add(bossChunk);
+            }
 
             for (int i = 0; i < data.chunksPlace.Count; i++) // Перечислить все места чанков из сохранения
             {
                 Debug.LogError(" I в цикле = " + i + " Количество чанков из координат = " + data.chunksPlace.Count);
                 Debug.LogError("Название чанка " + placeChunk[i].name + " Координаты этого чанка по оси Z " + data.chunksPlace[i]);
-                placeChunk[i].transform.position = data.chunksPlace[i];
+                //placeChunk[i].transform.position = data.chunksPlace[i];
                 Instantiate(placeChunk[i]); // Разместить чанк по координам из сохранения
+                placeChunk[i].transform.position = data.chunksPlace[i];
                 Debug.LogError("Координаты которые на самом деле " + placeChunk[i].transform.position.z);
-        }
-                if(spawnedItems.Count == 1)
-        {
-            foreach (Chunk chunk in placeChunk)
-            {
-                spawnedItems.Add(chunk);
             }
-        }
+/*            if (spawnedItems.Count == 1)
+            {
+                foreach (Chunk chunk in placeChunk)
+                {
+                    spawnedItems.Add(chunk);
+                }
+            }*/
 
-        if(spawnedItems.Count == 0)
-        {
-            spawnedItems.Add(firstChunk);
-            newGameIsDone = true;
-        }
     }
 
     public void SaveData(ref DataGame data)
@@ -189,38 +212,20 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         for (int i = 0; i < spawnedItems.Count; i++)
         {
-            nameChunks.Add(spawnedItems[i].name.Replace("(Clone)", String.Empty));
+            Debug.LogError(spawnedItems[i].name);
+            if (spawnedItems[i].name.Contains("(Clone)"))
+            {
+                nameChunks.Add(spawnedItems[i].name.Replace("(Clone)", String.Empty));
+            }
+            else
+            {
+                nameChunks.Add(spawnedItems[i].name);
+            }
             vector3s.Add(spawnedItems[i].transform.position);
         }
 
         data.chunksName = nameChunks;
         data.chunksPlace = vector3s;
 
-    }
-
-    public static GameObject getObjectById(int id)
-    {
-        Dictionary<int, GameObject> m_instanceMap = new Dictionary<int, GameObject>();
-
-        m_instanceMap.Clear();
-        List<GameObject> gos = new List<GameObject>();
-        foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)))
-        {
-            if (gos.Contains(go))
-            {
-                continue;
-            }
-            gos.Add(go);
-            m_instanceMap[go.GetInstanceID()] = go;
-        }
-
-        if (m_instanceMap.ContainsKey(id))
-        {
-            return m_instanceMap[id];
-        }
-        else
-        {
-            return null;
-        }
     }
 }
