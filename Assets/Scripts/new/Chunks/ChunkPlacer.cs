@@ -176,7 +176,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
                 }
             }
 
-            if (data.chunksPlace != null) // Если список с координатами != 0
+            if (data.chunksPlace != null) // Если список с координатами != null
             {
                 if (data.chunksPlace.Count != 0) // И если количество данных != 0
                 {
@@ -205,7 +205,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         if (spawnedItems.Count == 0)
         {
-            //spawnedItems.Add(firstChunk);
+            spawnedItems.Add(firstChunk);
             foreach (Chunk chunk in placeChunk)
             {
                 spawnedItems.Add(chunk);
