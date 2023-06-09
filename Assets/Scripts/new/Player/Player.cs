@@ -27,8 +27,6 @@ public class Player : Character , IDataPersist
 
     public Animator animator; // аниматор
 
-    private int idScene;
-
     [SerializeField] private PlayerSettings playerSettings; // Настройки персонажа (На данный момент только скорость)
 
     private IPlayerInput playerInput;  // Интерфейс направления
@@ -59,7 +57,6 @@ public class Player : Character , IDataPersist
         displayHealth(); // отображение здоровья на экране
         Move(); // Движение
         vectorToSafe = this.transform.position;
-        idScene = SceneManager.GetActiveScene().buildIndex;
         gravity.Gravitation(); //Гравитация
 
         FoundPowerUpTimer();
@@ -231,7 +228,6 @@ public class Player : Character , IDataPersist
         this.vectorToSafe = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
         this.vector = data.currentPlacePlayer;
         transform.position = data.currentPlacePlayer; // Загрузить текущие координаты из сохранения
-        idScene = data.SceneNumber; // Загрузить id уровня из сохранения
     }
 
     public void SaveData(ref DataGame data)
@@ -239,8 +235,6 @@ public class Player : Character , IDataPersist
         data.currentHpPlayer = (int) this.health; // Сохранить здоровье
         data.isFlippedRight = flipRight; // Сохранить поворт
         data.currentPlacePlayer = vectorToSafe; // Сохранить текущие координаты
-        data.SceneNumber = SceneManager.GetActiveScene().buildIndex; // Сохранить индекс текщей сцены
-
     }
 }
 
