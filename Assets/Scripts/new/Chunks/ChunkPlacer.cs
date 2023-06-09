@@ -44,7 +44,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             {
                 int idPreviouse = idNextScene - 1;
                 int indexMaxScene = SceneManager.sceneCountInBuildSettings - 1;
-                player.transform.position = new Vector3(0, 0, 0);
+                //player.transform.position = new Vector3(0, 0, 0);
                 Debug.LogError("Координаты игрока " + player.transform.position);
                 Debug.Log("МАКСИМАЛЬНОЕ КОЛИЧЕСТВО СЦЕН" + indexMaxScene);
                 if (SceneManager.GetActiveScene().buildIndex == indexMaxScene) // Если текущий индекс равен максимальному то

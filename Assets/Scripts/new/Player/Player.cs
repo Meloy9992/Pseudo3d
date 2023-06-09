@@ -230,7 +230,7 @@ public class Player : Character , IDataPersist
         this.flipRight = data.isFlippedRight; // «агрузить поворт из сохранени€
         this.vectorToSafe = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
         this.vector = data.currentPlacePlayer;
-       // transform.position = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
+        transform.position = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
         idScene = data.SceneNumber; // «агрузить id уровн€ из сохранени€
     }
 
