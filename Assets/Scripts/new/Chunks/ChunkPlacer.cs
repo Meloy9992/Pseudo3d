@@ -165,11 +165,11 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
         idScene = data.SceneNumber;
 
-        if (idScene != 0)
+/*        if (idScene != 0)
         {
             Debug.LogError("ID SCENE = " + idScene);
             SceneManager.LoadSceneAsync(idScene); //Загрузить след сцену
-        }
+        }*/
         List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
         List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
         for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
@@ -221,7 +221,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             }
         }
 
-        player.transform.position = data.currentPlacePlayer;
+       // player.transform.position = data.currentPlacePlayer;
 
     }
 
