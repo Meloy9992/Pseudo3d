@@ -11,7 +11,7 @@ using static UnityEngine.UIElements.VisualElement;
 
 public class ChunkPlacer : MonoBehaviour, IDataPersist
 {
-    public GameObject player;
+    public Player player;
     //public Teleport teleport;
     public Chunk firstChunk;
     public Chunk[] chunkPrefabs;
@@ -30,7 +30,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     private void Update()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         int idNextScene = SceneManager.GetActiveScene().buildIndex + 1;
 
@@ -163,15 +163,9 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
         // Переместить персонажа на нужную сцену
         // Загрузить чанки из сохранения
 
-        idScene = data.SceneNumber;
-
-/*        if (idScene != 0)
-        {
-            Debug.LogError("ID SCENE = " + idScene);
-            SceneManager.LoadSceneAsync(idScene); //Загрузить след сцену
-        }*/
         List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
         List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
+
         for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
         { // Перебрать все имена из сохранения
             for (int j = 0; j < prefabs.Count; j++) // Получить количество префабов
@@ -208,7 +202,6 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             Debug.LogError("Название чанка " + placeChunk[i].name + " Координаты этого чанка по оси Z " + data.chunksPlace[i]);
             placeChunk[i].transform.position = data.chunksPlace[i];
             Instantiate(placeChunk[i]); // Разместить чанк по координам из сохранения
-            placeChunk[i].transform.position = data.chunksPlace[i];
             Debug.LogError("Координаты которые на самом деле " + placeChunk[i].transform.position.z);
         }
 
@@ -219,10 +212,10 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             {
                 spawnedItems.Add(chunk);
             }
+            Debug.LogError("Количество чанков в spawnedItems = " + spawnedItems.Count);
+
+            player.transform.position = data.currentPlacePlayer;
         }
-
-       // player.transform.position = data.currentPlacePlayer;
-
     }
 
     public void SaveData(ref DataGame data)

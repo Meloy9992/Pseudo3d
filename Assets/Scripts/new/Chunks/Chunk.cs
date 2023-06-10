@@ -179,9 +179,17 @@ public class Chunk : MonoBehaviour, IDataPersist
             Debug.Log("Z = " + z);
             return arr;
         }
-        System.Random rnd = new System.Random();
-        x -= rnd.Next(-10, 10); 
-        z -= rnd.Next(-10, 10);
+
+        try
+        {
+            System.Random rnd = new System.Random();
+            x -= rnd.Next(-10, 10);
+            z -= rnd.Next(-10, 10);
+        }
+        catch(Exception ex)
+        {
+            Debug.LogError(ex.Message);
+        }
         return RandomRange(x, z);
     }
 

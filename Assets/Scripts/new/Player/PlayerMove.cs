@@ -19,10 +19,14 @@ public class PlayerMove
 
     public void Tick(CharacterController characterController, Gravity gravity)
     {
-        vector = Vector3.zero; // обнуление направления
+        //vector = Vector3.zero; // обнуление направления
         vector.x = - playerInput.Horizontal * playerSettings.Speed; //направление по горизонтали
         vector.z = - playerInput.Verical * playerSettings.Speed; // направление по вертикали
-
-        characterController.Move((vector * Time.deltaTime) + gravity.gravityMovement); // Передвиженеи по направлению
+        vector.y = gravity.gravityMovement.y;
+        Debug.LogError(gravity.gravityMovement);
+        Debug.LogError(gravity.gravityDirection);
+        Debug.LogError(vector);
+        Debug.LogError(Time.deltaTime);
+        characterController.Move((vector * Time.deltaTime)); // Передвиженеи по направлению
     }
 }

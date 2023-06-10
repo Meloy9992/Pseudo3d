@@ -16,6 +16,8 @@ public class Player : Character , IDataPersist
     public Text healthDisplay; // отображение здоровь€ на экране
     public float health; // здоровье
 
+    //public CharacterController characterController;
+
     public List<GameObject> unlockedWeapons; // список открытых оружий
     public GameObject[] allWeapons; // все оружи€
     public Image weaponIcon; // иконка оружи€
@@ -38,16 +40,15 @@ public class Player : Character , IDataPersist
         RigidBody = GetComponent<Rigidbody>(); // получение rigid body
         RigidBody.AddForce(0, 0, 2.0f, ForceMode.Impulse); // добавление движени€
         gravity = GetComponent<Gravity>();
-        vectorToSafe = this.transform.position;
+        vectorToSafe = transform.position;
         //GameObject.DontDestroyOnLoad(this.gameObject);
     }
 
     private void Awake()
     {
-        
         playerInput = new ControllerInput(); // ѕолучить контроллер ввода
 
-        playerMove = new PlayerMove(playerInput, vector, playerSettings, animator); // ѕолучить движение игрока внедр€€ в класс параметры
+        playerMove = new PlayerMove(playerInput, transform.position, playerSettings, animator); // ѕолучить движение игрока внедр€€ в класс параметры
         //DontDestroyOnLoad(this.gameObject);
     }
 
@@ -56,7 +57,7 @@ public class Player : Character , IDataPersist
     {
         displayHealth(); // отображение здоровь€ на экране
         Move(); // ƒвижение
-        vectorToSafe = this.transform.position;
+        //vectorToSafe = this.transform.position;
         gravity.Gravitation(); //√равитаци€
 
         FoundPowerUpTimer();
@@ -114,8 +115,9 @@ public class Player : Character , IDataPersist
     protected override void Move() 
     {
         playerInput.ReadInput(); // —читать направление
+        Debug.LogError("MOVE2 " + transform.position.z);
         playerMove.Tick(characterController, gravity); // выполнить движение по направлению
-
+        Debug.LogError("MOVE3 " + transform.position.z);
         animaion(); // включение анимации
 
         fliped(); // повернуть персонажа, если смнилось направление движени€
@@ -225,9 +227,12 @@ public class Player : Character , IDataPersist
     {
         this.health = data.currentHpPlayer; // «агрзить здоровье из сохранени€
         this.flipRight = data.isFlippedRight; // «агрузить поворт из сохранени€
-        this.vectorToSafe = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
-        this.vector = data.currentPlacePlayer;
+
+        characterController.enabled = false;
+        vectorToSafe = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
+        vector = data.currentPlacePlayer;
         transform.position = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
+        characterController.enabled = true;
     }
 
     public void SaveData(ref DataGame data)
