@@ -62,7 +62,7 @@ public class Chunk : MonoBehaviour, IDataPersist
 
         GenerationGrass();
 
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 3; i++) // TODO - СДЕЛАТЬ ГЕНЕАРАЦИЮ ЧЕРЕЗ public ПЕРЕМЕННУЮ
         {
             PlaceOneEnemy();
             //yield return new WaitForSecondsRealtime(0.5f); // Размещение врагов с задержкой 0,5 секунды
@@ -70,7 +70,7 @@ public class Chunk : MonoBehaviour, IDataPersist
 
         FoundEnemy();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++) // TODO - СДЕЛАТЬ ГЕНЕАРАЦИЮ ЧЕРЕЗ public ПЕРЕМЕННУЮ
         {
             PlaceOneGrass();
             //yield return new WaitForSecondsRealtime(0.5f); // Размещение врагов с задержкой 0,5 секунды
@@ -186,7 +186,7 @@ public class Chunk : MonoBehaviour, IDataPersist
                 }
             }
 
-            Grass newGrass = Instantiate(grassPrefabs[UnityEngine.Random.Range(0, EnemyPrefabs.Length)]); // Создать противника из префаба
+            Grass newGrass = Instantiate(grassPrefabs[UnityEngine.Random.Range(0, grassPrefabs.Length)]); // Создать противника из префаба
             Vector2Int position = vacantPlace.ElementAt(UnityEngine.Random.Range(0, vacantPlace.Count)); // Получить случайную позицию элемента
             int[] arr = RandomRange(position.x, position.y);
             newGrass.transform.position = new Vector3((arr[0] - TeleportationPlace.position.x) * UnityEngine.Random.Range(-1, 1), 0.85f, arr[1] + TeleportationPlace.position.z + 30); // Разместить противника на уровне (игровое поле x = 30, z = 20) position.y + TeleportationPlace.position.z + 30
