@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\new\Player\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\new\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\new\Player\Player_attack.cs" />
+    <Compile Include="Assets\Scripts\new\Enemy\HealthBarEnemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

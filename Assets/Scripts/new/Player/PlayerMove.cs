@@ -23,10 +23,6 @@ public class PlayerMove
         vector.x = - playerInput.Horizontal * playerSettings.Speed; //направление по горизонтали
         vector.z = - playerInput.Verical * playerSettings.Speed; // направление по вертикали
         vector.y = gravity.gravityMovement.y;
-        Debug.LogError(gravity.gravityMovement);
-        Debug.LogError(gravity.gravityDirection);
-        Debug.LogError(vector);
-        Debug.LogError(Time.deltaTime);
         characterController.Move((vector * Time.deltaTime)); // Передвиженеи по направлению
     }
 }

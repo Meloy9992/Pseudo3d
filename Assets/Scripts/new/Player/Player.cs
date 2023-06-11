@@ -49,7 +49,7 @@ public class Player : Character , IDataPersist
         playerInput = new ControllerInput(); // ѕолучить контроллер ввода
 
         playerMove = new PlayerMove(playerInput, transform.position, playerSettings, animator); // ѕолучить движение игрока внедр€€ в класс параметры
-        //DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
 
 
@@ -115,9 +115,7 @@ public class Player : Character , IDataPersist
     protected override void Move() 
     {
         playerInput.ReadInput(); // —читать направление
-        Debug.LogError("MOVE2 " + transform.position.z);
         playerMove.Tick(characterController, gravity); // выполнить движение по направлению
-        Debug.LogError("MOVE3 " + transform.position.z);
         animaion(); // включение анимации
 
         fliped(); // повернуть персонажа, если смнилось направление движени€
@@ -229,9 +227,14 @@ public class Player : Character , IDataPersist
         this.flipRight = data.isFlippedRight; // «агрузить поворт из сохранени€
 
         characterController.enabled = false;
+        
         vectorToSafe = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
+        Debug.LogError(vectorToSafe);
         vector = data.currentPlacePlayer;
+        Debug.LogError(vector);
         transform.position = data.currentPlacePlayer; // «агрузить текущие координаты из сохранени€
+        Debug.LogError(transform.position);
+        Debug.LogError(this.transform.position);
         characterController.enabled = true;
     }
 
@@ -239,7 +242,7 @@ public class Player : Character , IDataPersist
     {
         data.currentHpPlayer = (int) this.health; // —охранить здоровье
         data.isFlippedRight = flipRight; // —охранить поворт
-        data.currentPlacePlayer = vectorToSafe; // —охранить текущие координаты
+        data.currentPlacePlayer = transform.position; // —охранить текущие координаты
     }
 }
 

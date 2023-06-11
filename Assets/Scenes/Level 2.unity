@@ -325,7 +325,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &563670974
 GameObject:
@@ -835,7 +835,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1a3907064adbdb04591fe2df2c4be3f7, type: 2}
     - target: {fileID: 1614161909035304479, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1614161909035304479, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
       propertyPath: m_LocalPosition.x
@@ -892,56 +892,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1614161908028930127, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
   m_PrefabInstance: {fileID: 1905721424}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1947243896
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1947243898}
-  - component: {fileID: 1947243897}
-  m_Layer: 0
-  m_Name: ChunkPlacer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1947243897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947243896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88984e1bee3616a469b8cf166f56546b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  firstChunk: {fileID: 1614161909035304478, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
-  chunkPrefabs:
-  - {fileID: 673812357659634858, guid: 9cceaad59bf69b545ac0b7822a7f82c8, type: 3}
-  - {fileID: 673812357659634858, guid: f0a6f7baa01074a4e9e17546ff065d8e, type: 3}
-  - {fileID: 673812357659634858, guid: ecf71ad9ccfd52347aa014bea0596583, type: 3}
-  - {fileID: 673812357659634858, guid: 7afff97860818564d9f161e3a04cb437, type: 3}
-  - {fileID: 673812357659634858, guid: 7427d7b2d897bcf44bcaffe76de66d96, type: 3}
-  bossChunk: {fileID: 1614161909035304478, guid: 592ab9d899bb73744aafcf800c3fdc54, type: 3}
---- !u!4 &1947243898
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947243896}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 9, z: 13.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

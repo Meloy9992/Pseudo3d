@@ -87,6 +87,8 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     private void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
+
         /*        spawnedItems.Clear();
                 Debug.LogError("Очищен список " + spawnedItems.Count);*/
         /*        if (spawnedItems.Count == 0)
@@ -159,11 +161,23 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-        // Если сцена != 1, то найти персонажа
-        // Переместить персонажа на нужную сцену
-        // Загрузить чанки из сохранения
+        // Если загружен уровень по id
+        // То начать прогружать чанки
 
-        List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
+        idScene = data.SceneNumber;
+
+        if (idScene > 1)
+        {
+            Debug.LogError("ID SCENE = " + idScene);
+            SceneManager.LoadScene(idScene); //Загрузить след сцену
+        }
+
+        if (SceneManager.GetSceneByBuildIndex(idScene).isLoaded)
+        {
+            Debug.LogError("ТОЛЬКО СЕЙЧАС ЗАГРУЗИЛСЯ УРОВЕНЬ 2" + SceneManager.GetActiveScene().buildIndex + " " + SceneManager.GetActiveScene().name);
+        }
+
+            List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
         List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
 
         for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
@@ -214,7 +228,7 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             }
             Debug.LogError("Количество чанков в spawnedItems = " + spawnedItems.Count);
 
-            player.transform.position = data.currentPlacePlayer;
+            //player.transform.position = data.currentPlacePlayer;
         }
     }
 

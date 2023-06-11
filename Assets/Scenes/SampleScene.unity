@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88984e1bee3616a469b8cf166f56546b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1925039189}
+  player: {fileID: 2227490732082179490}
   firstChunk: {fileID: 1614161909035304478, guid: 4c8d21a017c55264aba00af9b36ce874, type: 3}
   chunkPrefabs:
   - {fileID: 673812357659634858, guid: 7427d7b2d897bcf44bcaffe76de66d96, type: 3}
@@ -907,3 +907,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d3512bf8420e164182753b7baf5714e, type: 3}
+--- !u!114 &2227490732082179490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2227490730711345603, guid: 8d3512bf8420e164182753b7baf5714e, type: 3}
+  m_PrefabInstance: {fileID: 2227490732082179489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925039189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dac36bb8622b50439aad85ea32875cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
