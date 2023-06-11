@@ -23,7 +23,5 @@ public class HealthBarEnemy : MonoBehaviour
         hpEnemy = enemy.health;
         tempHp = (float) hpEnemy / maxHp;
         bar.fillAmount = tempHp;
-
-        Debug.LogError(bar.fillAmount + "  Вычисленное ХП " + tempHp);
     }
 }

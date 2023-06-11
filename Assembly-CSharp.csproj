@@ -64,7 +64,6 @@
     <Compile Include="Assets\Scripts\new\Character.cs" />
     <Compile Include="Assets\Scripts\new\Save\JsonHelper.cs" />
     <Compile Include="Assets\Scripts\new\Chunks\Room\Room.cs" />
-    <Compile Include="Assets\Scripts\new\Save\SerializeChunk.cs" />
     <Compile Include="Assets\Scripts\new\Chunks\Chunk.cs" />
     <Compile Include="Assets\Scripts\new\Save\DataGame.cs" />
     <Compile Include="Assets\Scripts\new\Interfaces\ITakeDamage.cs" />
@@ -89,7 +88,6 @@
     <Compile Include="Assets\Scripts\new\Boosters\Enum\EnumPotion.cs" />
     <Compile Include="Assets\Scripts\new\Gravity.cs" />
     <Compile Include="Assets\Scripts\new\Interfaces\IFlip.cs" />
-    <Compile Include="Assets\Scripts\new\Save\SerializableList.cs" />
     <Compile Include="Assets\Scripts\new\QuitGame.cs" />
     <Compile Include="Assets\Scripts\new\Camera\Cam_move.cs" />
     <Compile Include="Assets\Scripts\new\Weapon\Weapon.cs" />
@@ -100,6 +98,7 @@
     <Compile Include="Assets\Scripts\new\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\new\Player\Player_attack.cs" />
     <Compile Include="Assets\Scripts\new\Enemy\HealthBarEnemy.cs" />
+    <Compile Include="Assets\Scripts\new\Grass\Grass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
