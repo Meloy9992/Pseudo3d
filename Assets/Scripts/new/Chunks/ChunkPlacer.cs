@@ -73,8 +73,6 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             Debug.LogException(ex);
         }
 
-        Debug.Log("" + spawnedItems.Count);
-
         if (player.transform.position.z < spawnedItems[spawnedItems.Count - 1].end.position.z)
         {
             Debug.Log("Z OS PLAYER " + player.transform.position.z);
@@ -161,75 +159,61 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
 
     public void LoadData(DataGame data)
     {
-        // Если загружен уровень по id
-        // То начать прогружать чанки
-
-        idScene = data.SceneNumber;
-
-        if (idScene > 1)
-        {
-            Debug.LogError("ID SCENE = " + idScene);
-            SceneManager.LoadScene(idScene); //Загрузить след сцену
-        }
-
-        if (SceneManager.GetSceneByBuildIndex(idScene).isLoaded)
-        {
-            Debug.LogError("ТОЛЬКО СЕЙЧАС ЗАГРУЗИЛСЯ УРОВЕНЬ 2" + SceneManager.GetActiveScene().buildIndex + " " + SceneManager.GetActiveScene().name);
-        }
+            idScene = data.SceneNumber;
 
             List<Chunk> prefabs = chunkPrefabs.ToList(); // Префабы уровней
-        List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
+            List<Chunk> placeChunk = new List<Chunk>(); // Список чанков которые будут размещены при загрузке
 
-        for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
-        { // Перебрать все имена из сохранения
-            for (int j = 0; j < prefabs.Count; j++) // Получить количество префабов
-            { // Перебрать все имена из префабов
-                if (prefabs[j].name.Equals(data.chunksName[i])) // Если имя префаба совпало с именем чанка
-                {
-                    placeChunk.Add(prefabs[j]); // добавить в список для размещения чанков
-                    Debug.LogError("Префаб добавлен " + prefabs[j].name + " Текущая сцена id = " + SceneManager.GetActiveScene().buildIndex + " Текущая сцена название = " + SceneManager.GetActiveScene().name);
-                    loadedIsDone = true;
+            for (int i = 0; i < data.chunksName.Count; i++) // Получить количество сохраненных чанков
+            { // Перебрать все имена из сохранения
+                for (int j = 0; j < prefabs.Count; j++) // Получить количество префабов
+                { // Перебрать все имена из префабов
+                    if (prefabs[j].name.Equals(data.chunksName[i])) // Если имя префаба совпало с именем чанка
+                    {
+                        placeChunk.Add(prefabs[j]); // добавить в список для размещения чанков
+                        Debug.LogError("Префаб добавлен " + prefabs[j].name + " Текущая сцена id = " + SceneManager.GetActiveScene().buildIndex + " Текущая сцена название = " + SceneManager.GetActiveScene().name);
+                        loadedIsDone = true;
+                    }
                 }
             }
-        }
 
-        if (data.chunksPlace != null) // Если список с координатами != null
-        {
-            if (data.chunksPlace.Count != 0) // И если количество данных != 0
+            if (data.chunksPlace != null) // Если список с координатами != null
             {
-                if (data.chunksName[0].Equals("Main Chunk"))
+                if (data.chunksPlace.Count != 0) // И если количество данных != 0
                 {
-                    data.chunksName.RemoveAt(0); // 
-                    data.chunksPlace.RemoveAt(0); // 
+                    if (data.chunksName[0].Equals("Main Chunk"))
+                    {
+                        data.chunksName.RemoveAt(0); // 
+                        data.chunksPlace.RemoveAt(0); // 
+                    }
                 }
             }
-        }
 
-        if (placeChunk.Count == 3)
-        {
-            placeChunk.Add(bossChunk);
-        }
-
-        for (int i = 0; i < data.chunksPlace.Count; i++) // Перечислить все места чанков из сохранения
-        {
-            Debug.LogError(" I в цикле = " + i + " Количество чанков из координат = " + data.chunksPlace.Count);
-            Debug.LogError("Название чанка " + placeChunk[i].name + " Координаты этого чанка по оси Z " + data.chunksPlace[i]);
-            placeChunk[i].transform.position = data.chunksPlace[i];
-            Instantiate(placeChunk[i]); // Разместить чанк по координам из сохранения
-            Debug.LogError("Координаты которые на самом деле " + placeChunk[i].transform.position.z);
-        }
-
-        if (spawnedItems.Count == 0)
-        {
-            spawnedItems.Add(firstChunk);
-            foreach (Chunk chunk in placeChunk)
+            if (placeChunk.Count == 3)
             {
-                spawnedItems.Add(chunk);
+                placeChunk.Add(bossChunk);
             }
-            Debug.LogError("Количество чанков в spawnedItems = " + spawnedItems.Count);
 
-            //player.transform.position = data.currentPlacePlayer;
-        }
+            for (int i = 0; i < data.chunksPlace.Count; i++) // Перечислить все места чанков из сохранения
+            {
+                Debug.LogError(" I в цикле = " + i + " Количество чанков из координат = " + data.chunksPlace.Count);
+                Debug.LogError("Название чанка " + placeChunk[i].name + " Координаты этого чанка по оси Z " + data.chunksPlace[i] + " На сцене " + SceneManager.GetActiveScene().buildIndex);
+                placeChunk[i].transform.position = data.chunksPlace[i];
+                Instantiate(placeChunk[i]); // Разместить чанк по координам из сохранения
+                Debug.LogError("Координаты которые на самом деле " + placeChunk[i].transform.position.z);
+            }
+
+            if (spawnedItems.Count == 0)
+            {
+                spawnedItems.Add(firstChunk);
+                foreach (Chunk chunk in placeChunk)
+                {
+                    spawnedItems.Add(chunk);
+                }
+                Debug.LogError("Количество чанков в spawnedItems = " + spawnedItems.Count);
+
+                //player.transform.position = data.currentPlacePlayer;
+            }
     }
 
     public void SaveData(ref DataGame data)

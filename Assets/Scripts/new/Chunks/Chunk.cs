@@ -165,35 +165,38 @@ public class Chunk : MonoBehaviour, IDataPersist
 
         if (grasses.Count != 0)
         {
-            HashSet<Vector2Int> vacantPlace = new HashSet<Vector2Int>(); // Список доступных мест
-
-            for (int x = 0; x < spawnedGrasses.GetLength(0); x++) // Провести цикл по длине X
+            if(grassPrefabs.Length != 0)
             {
-                for (int y = 0; y < spawnedGrasses.GetLength(1); y++) // Провести цикл по длине Y
+                HashSet<Vector2Int> vacantPlace = new HashSet<Vector2Int>(); // Список доступных мест
+
+                for (int x = 0; x < spawnedGrasses.GetLength(0); x++) // Провести цикл по длине X
                 {
-                    if (spawnedGrasses[x, y] == null) continue; // Если чанк по координатам равен нулю, то пропустить
+                    for (int y = 0; y < spawnedGrasses.GetLength(1); y++) // Провести цикл по длине Y
+                    {
+                        if (spawnedGrasses[x, y] == null) continue; // Если чанк по координатам равен нулю, то пропустить
 
-                    int maxX = spawnedGrasses.GetLength(0) - 1; // Получение максимального X
-                    int maxY = spawnedGrasses.GetLength(1) - 1; // Получение максимального Y
+                        int maxX = spawnedGrasses.GetLength(0) - 1; // Получение максимального X
+                        int maxY = spawnedGrasses.GetLength(1) - 1; // Получение максимального Y
 
-                    if (x > 0 && spawnedGrasses[x - 1, y] == null) vacantPlace.Add(new Vector2Int(x - 1, y));// Если X больше 0 и предыдущий ряд чанков равен 0 // То добавить предыдущий ряд чанков
+                        if (x > 0 && spawnedGrasses[x - 1, y] == null) vacantPlace.Add(new Vector2Int(x - 1, y));// Если X больше 0 и предыдущий ряд чанков равен 0 // То добавить предыдущий ряд чанков
 
-                    if (y > 0 && spawnedGrasses[x, y - 1] == null) vacantPlace.Add(new Vector2Int(x, y - 1)); // Если Y больше 0 и предыдущий чанк равен 0 // Добавить новый чанк
+                        if (y > 0 && spawnedGrasses[x, y - 1] == null) vacantPlace.Add(new Vector2Int(x, y - 1)); // Если Y больше 0 и предыдущий чанк равен 0 // Добавить новый чанк
 
-                    if (x < maxX && spawnedGrasses[x + 1, y] == null) vacantPlace.Add(new Vector2Int(x + 1, y)); // Если X меньше maxX и следующий ряд чанков равен 0 // То добавить следующий ряд чанков
+                        if (x < maxX && spawnedGrasses[x + 1, y] == null) vacantPlace.Add(new Vector2Int(x + 1, y)); // Если X меньше maxX и следующий ряд чанков равен 0 // То добавить следующий ряд чанков
 
-                    if (y < maxY && spawnedGrasses[x, y + 1] == null) vacantPlace.Add(new Vector2Int(x, y + 1)); // Если Y меньше maxY и следующий чанк равен 0 // То добавить следующий чанк
+                        if (y < maxY && spawnedGrasses[x, y + 1] == null) vacantPlace.Add(new Vector2Int(x, y + 1)); // Если Y меньше maxY и следующий чанк равен 0 // То добавить следующий чанк
+                    }
                 }
-            }
 
-            Grass newGrass = Instantiate(grassPrefabs[UnityEngine.Random.Range(0, grassPrefabs.Length)]); // Создать противника из префаба
-            Vector2Int position = vacantPlace.ElementAt(UnityEngine.Random.Range(0, vacantPlace.Count)); // Получить случайную позицию элемента
-            int[] arr = RandomRange(position.x, position.y);
-            newGrass.transform.position = new Vector3((arr[0] - TeleportationPlace.position.x) * UnityEngine.Random.Range(-1, 1), 0.85f, arr[1] + TeleportationPlace.position.z + 30); // Разместить противника на уровне (игровое поле x = 30, z = 20) position.y + TeleportationPlace.position.z + 30
-            Debug.Log("МЕСТОНАХОЖДЕНИЕ ТРАВЫ" + newGrass.transform.position);
-            Debug.Log("ТЕЛЕПОРТАТИОН ПЛЕЙС " + TeleportationPlace.position.x + " " + TeleportationPlace.position.z);
-            spawnedGrasses[position.x, position.y] = newGrass; // Разместить противника в матрице
-            Debug.Log("МЕСТОНАХОЖДЕНИЕ ТРАВЫ В МАТРИЦЕ " + position.x + " " + position.y);
+                Grass newGrass = Instantiate(grassPrefabs[UnityEngine.Random.Range(0, grassPrefabs.Length)]); // Создать противника из префаба
+                Vector2Int position = vacantPlace.ElementAt(UnityEngine.Random.Range(0, vacantPlace.Count)); // Получить случайную позицию элемента
+                int[] arr = RandomRange(position.x, position.y);
+                newGrass.transform.position = new Vector3((arr[0] - TeleportationPlace.position.x) * UnityEngine.Random.Range(-1, 1), 0.85f, arr[1] + TeleportationPlace.position.z + 30); // Разместить противника на уровне (игровое поле x = 30, z = 20) position.y + TeleportationPlace.position.z + 30
+                Debug.Log("МЕСТОНАХОЖДЕНИЕ ТРАВЫ" + newGrass.transform.position);
+                Debug.Log("ТЕЛЕПОРТАТИОН ПЛЕЙС " + TeleportationPlace.position.x + " " + TeleportationPlace.position.z);
+                spawnedGrasses[position.x, position.y] = newGrass; // Разместить противника в матрице
+                Debug.Log("МЕСТОНАХОЖДЕНИЕ ТРАВЫ В МАТРИЦЕ " + position.x + " " + position.y);
+            }
         }
     }
 

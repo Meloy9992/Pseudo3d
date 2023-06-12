@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\new\Chunks\Chunk.cs" />
     <Compile Include="Assets\Scripts\new\Save\DataGame.cs" />
     <Compile Include="Assets\Scripts\new\Interfaces\ITakeDamage.cs" />
+    <Compile Include="Assets\Scripts\new\Enemy\HealthBarEnemy.cs" />
     <Compile Include="Assets\Scripts\new\Boosters\Booster.cs" />
     <Compile Include="Assets\Scripts\new\Save\FileDataHandler.cs" />
     <Compile Include="Assets\Scripts\new\Chunks\DestroyWithChance.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\new\Teleport\Teleport.cs" />
     <Compile Include="Assets\Scripts\new\Weapon\ReactForAttack.cs" />
     <Compile Include="Assets\Scripts\new\Scene\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\new\Grass\Grass.cs" />
     <Compile Include="Assets\Scripts\new\Boosters\Enum\EnumPotion.cs" />
     <Compile Include="Assets\Scripts\new\Gravity.cs" />
     <Compile Include="Assets\Scripts\new\Interfaces\IFlip.cs" />
@@ -97,8 +99,7 @@
     <Compile Include="Assets\Scripts\new\Player\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\new\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\new\Player\Player_attack.cs" />
-    <Compile Include="Assets\Scripts\new\Enemy\HealthBarEnemy.cs" />
-    <Compile Include="Assets\Scripts\new\Grass\Grass.cs" />
+    <Compile Include="Assets\Scripts\new\Scene\LoadScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

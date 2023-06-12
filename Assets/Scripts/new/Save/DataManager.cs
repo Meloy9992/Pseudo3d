@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using System.IO;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 
 public class DataManager : MonoBehaviour
 {
@@ -79,13 +80,13 @@ public class DataManager : MonoBehaviour
             return; // Выйти из заугрузки данных
         }
 
-        foreach(IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
-        {
-            dataPersist.LoadData(dataGame); // загрузить данные в файл
-        }
+            foreach (IDataPersist dataPersist in dataPersistenceObjects) // Перечислить данные из всех классов которые унаследованы от IDataPersist
+            {
+                dataPersist.LoadData(dataGame); // загрузить данные в файл
+            }
 
-        Debug.Log("Произошла загрузка параметров:  Местоположение персонажа: " + dataGame.currentPlacePlayer + " ХП: "
-            + dataGame.currentHpPlayer + " игрок повернут на право? " + dataGame.isFlippedRight);
+            Debug.Log("Произошла загрузка параметров:  Местоположение персонажа: " + dataGame.currentPlacePlayer + " ХП: "
+                + dataGame.currentHpPlayer + " игрок повернут на право? " + dataGame.isFlippedRight);
     }
 
     public void SaveGame()
