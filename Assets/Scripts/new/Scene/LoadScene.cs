@@ -12,7 +12,7 @@ public class LoadScene : MonoBehaviour
     //public int idScene = 0;
     public void LoadLevel()
     {
-        DataGame data = new FileDataHandler(Application.persistentDataPath, "Save.json").Load();
+        DataGame data = new FileDataHandler(Application.persistentDataPath, "Save.json").Load(); // TODO - устранить хардкод
 
         screen.SetActive(true);
         StartCoroutine(LoadSceneGame(data.SceneNumber));
