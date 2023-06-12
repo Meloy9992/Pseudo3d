@@ -81,6 +81,12 @@ public class ChunkPlacer : MonoBehaviour, IDataPersist
             SpawnChunk();
 
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) // если нажата q то вменить оружие
+        {
+            Debug.Log("Выход из игры");
+            Application.Quit();
+        }
     }
 
     private void Awake()

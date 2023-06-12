@@ -1,15 +1,8 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Palmmedia.ReportGenerator.Core.Common;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using System.IO;
-using Unity.VisualScripting;
-using UnityEditor.SearchService;
 
 public class DataManager : MonoBehaviour
 {

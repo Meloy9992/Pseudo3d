@@ -21,7 +21,12 @@ public class LoadScene : MonoBehaviour
     IEnumerator LoadSceneGame(int idScene)
     {
         Debug.LogError("ID СЦЕНЫ КОТОРУЮ ПЕРЕДАЛИ " + idScene);
-        SceneManager.LoadScene(1);
+
+        if (idScene > 1)
+        {
+            SceneManager.LoadScene(1); // Загрузить 1 сцену для получения DontDestroy GameObject'ов
+        }
+
         AsyncOperation LoadAsync = SceneManager.LoadSceneAsync(idScene); // Начать загружать сцену по id
 
         while (!LoadAsync.isDone) // Пока сцена не загрузится
@@ -31,6 +36,8 @@ public class LoadScene : MonoBehaviour
             slider.fillAmount = progress; // Заполнить слайдер прогрессом
             yield return null; // Так как это корутина(Сопрограмма) - надо вернуть что-то
         }
-       
+
+
+
     }
 }
